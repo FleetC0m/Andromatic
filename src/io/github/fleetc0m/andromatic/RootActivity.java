@@ -1,5 +1,7 @@
 package io.github.fleetc0m.andromatic;
 
+import io.github.fleetc0m.andromatic.UI.CreateNewRuleFragment;
+
 import java.util.Locale;
 
 import android.os.Bundle;
@@ -69,19 +71,25 @@ public class RootActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
-			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			return fragment;
+			switch(position){
+			case 0:
+				return new Fragment();
+			case 1:
+				return new CreateNewRuleFragment();
+			case 2:
+				return new Fragment();
+			default:
+					throw new IllegalArgumentException("invalid position");
+			}
+//			Fragment fragment = new DummySectionFragment();
+//			Bundle args = new Bundle();
+//			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+//			fragment.setArguments(args);
+//			return fragment;
 		}
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
 			return 3;
 		}
 
@@ -104,6 +112,7 @@ public class RootActivity extends FragmentActivity {
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
 	 */
+	@Deprecated
 	public static class DummySectionFragment extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this
