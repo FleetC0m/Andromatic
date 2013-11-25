@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/sms_received_trigger_prompt_phone_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sms_received_trigger_prompt_phone_no"/>
+    <EditText 
+        android:id="@+id/sms_received_trigger_phone_num_edit"
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sms_received_trigger_prompt_phone_no_hint"/>"
+	<TextView 
+	    android:id="@+id/sms_received_trigger_keyword_prompt"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/sms_received_trigger_keyword_prompt"/>
+	<EditText 
+	    android:id="@+id/sms_received_trigger_keyword_edit"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	   	android:singleLine="false"
+	    android:lines="3"
+	    android:hint="@string/sms_received_trigger_keyword_hint"/>
+</LinearLayout>

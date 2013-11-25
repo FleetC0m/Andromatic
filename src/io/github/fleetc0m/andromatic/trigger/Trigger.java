@@ -3,7 +3,9 @@ package io.github.fleetc0m.andromatic.trigger;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -15,13 +17,14 @@ import android.view.View;
 public abstract class Trigger {
 	protected Intent incomingIntent;
 	protected String savedRule;
+	protected Context context;
 	/**
 	 * The class name of the trigger is used by Trigger 
 	 * Dispatcher to create an instance of trigger
 	 * through dynamic loading.
 	 */
 	private static final String CLASS_NAME = "io.github.fleetc0m.andromatic.trigger";
-	
+
 	public Trigger(){
 		this(null, null);
 	}
@@ -30,13 +33,17 @@ public abstract class Trigger {
 		this.savedRule = savedRule;
 	}
 	
+	public Trigger(Context context){
+		this.context = context;
+	}
+	
 	/**
 	 * Get the view at add new rule fragment based on savedVars provided 
 	 * @param inflator
 	 * @param savedVars
 	 * @return
 	 */
-	public abstract View getConfigView(LayoutInflater inflator, HashMap<String, String> savedVars);
+	public abstract View getConfigView(LayoutInflater inflator, Bundle b);
 	
 	/**
 	 * Get an unfilled view at add new rule fragment.
@@ -46,8 +53,8 @@ public abstract class Trigger {
 	public abstract View getEmptyConfigView(LayoutInflater inflator);
 	
 	/**
-	 * Let the action happen
-	 * @return true on success. false on fail.
+	 * Query whether to fire this trigger.
+	 * @return
 	 */
 	public abstract boolean trig();
 	

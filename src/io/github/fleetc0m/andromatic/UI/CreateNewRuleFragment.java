@@ -58,10 +58,16 @@ public class CreateNewRuleFragment extends Fragment {
 	public static class NewRuleConfigAdapter extends ArrayAdapter<String>{
 		private Context context;
 		private ArrayList<String> objects;
+		private View triggerConfigView;
+		private View ActionConfigView;
+		private TriggerSpinnnerOnClickListener trigListener;
+		private ActionSpinnerOnClickListener actionListener;
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
 			super(context, resource, objects);
 			this.context = context;
 			this.objects = objects;
+			trigListener = new TriggerSpinnnerOnClickListener();
+			actionListener = new ActionSpinnerOnClickListener();
 		}
 		
 		@Override
@@ -78,6 +84,7 @@ public class CreateNewRuleFragment extends Fragment {
 						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				View view = inflater.inflate(R.layout.choose_trigger_entry, null);
 				Spinner triggerSpinner = (Spinner)view.findViewById(R.id.choose_trigger_spinner);
+				triggerSpinner.setOnClickListener(trigListener);
 				//TODO: add trigger spinner
 				return view;
 			}
@@ -93,6 +100,7 @@ public class CreateNewRuleFragment extends Fragment {
 						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				View view = inflater.inflate(R.layout.choose_action_entry, null);
 				Spinner actionSpinner = (Spinner) view.findViewById(R.id.choose_action_spinner);
+				actionSpinner.setOnClickListener(actionListener);
 				//TODO: add spinner
 				return view;
 				}
@@ -106,6 +114,25 @@ public class CreateNewRuleFragment extends Fragment {
 			default:
 				throw new IllegalArgumentException("invalid pos");
 			}
+		}
+		private class TriggerSpinnnerOnClickListener implements OnClickListener{
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		}
+		
+		private class ActionSpinnerOnClickListener implements OnClickListener{
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		}
 	}
 	

@@ -11,4 +11,9 @@
 	<string name="save_button_text">Save</string>
 	<string name="choose_trigger_prompt">Choose the trigger application:</string>
 	<string name="choose_action_prompt">Choose the action:</string>
+	<string name="sms_received_trigger_prompt_phone_no">Incoming SMS from this phone number:</string>
+	<string name="sms_received_trigger_prompt_phone_no_hint">Blank if apply to all numbers</string>
+	<string name="sms_received_trigger_keyword_prompt">Contains keyword:</string>
+	<string name="sms_received_trigger_keyword_hint">Blank if apply to all messages. Mulitple keywords separated by space</string>
+	<string name="change_volume_action_prompt">Change the ringtone volume to:</string>
 </resources>
