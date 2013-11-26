@@ -61,6 +61,7 @@ public class CreateNewRuleFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, 
 			Bundle savedInstanceState){
+		super.onCreateView(inflater, container, savedInstanceState);
 		View rootView = inflater.inflate(R.layout.new_rule_fragment, container, false);
 		Button cancelBtn = (Button)rootView.findViewById(R.id.cancel_button);
 		cancelBtn.setOnClickListener(new CancelActionListener());
@@ -90,6 +91,8 @@ public class CreateNewRuleFragment extends Fragment {
 		
 		private View chooseTriggerView;
 		private View chooseActionView;
+		private Spinner triggerSpinner;
+		private Spinner actionSpinner;
 		
 		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
@@ -116,33 +119,23 @@ public class CreateNewRuleFragment extends Fragment {
 			LayoutInflater i = (LayoutInflater) 
 					context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			chooseTriggerView = i.inflate(R.layout.choose_trigger_entry, null);
-			Spinner ts = (Spinner)chooseTriggerView.findViewById(R.id.choose_trigger_spinner);
-			ts.setAdapter(triggerSpinnerAdapter);
-			ts.setOnItemSelectedListener(trigListener);
+			triggerSpinner = (Spinner)chooseTriggerView.findViewById(R.id.choose_trigger_spinner);
+			triggerSpinner.setAdapter(triggerSpinnerAdapter);
+			triggerSpinner.setOnItemSelectedListener(trigListener);
 			
 			chooseActionView = i.inflate(R.layout.choose_action_entry, null);
-			Spinner as = (Spinner) chooseActionView.findViewById(R.id.choose_action_spinner);
-			as.setAdapter(actionSpinnerAdapter);
-			as.setOnItemSelectedListener(actionListener);
+			actionSpinner = (Spinner) chooseActionView.findViewById(R.id.choose_action_spinner);
+			actionSpinner.setAdapter(actionSpinnerAdapter);
+			actionSpinner.setOnItemSelectedListener(actionListener);
 		}
-		
 		@Override
 		public View getView(int pos, View cacheView, ViewGroup parent){
-			//TODO:
-			if(
-					(cacheView != null) && 
-					(cacheView.getTag() != null) &&( 
-					cacheView.getTag().equals(objects.get(pos)))){
-				return cacheView;
-			}
+			//Log.d(TAG, "getView called. pos " + pos);
 			switch(pos){
 			case 0:{
 				return chooseTriggerView;
 			}
 			case 1:{
-				if(triggerConfigView != null){
-					Log.d(TAG, "triggerConfigView not null");
-				}
 				return triggerConfigView != null ? triggerConfigView : new View(context);
 				}
 			case 2:{
@@ -166,10 +159,11 @@ public class CreateNewRuleFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int pos, long id) {
+				triggerSpinner.setEnabled(false);
 				Log.d(TAG, "clicked, pos " + pos);
 				if(pos == 0){
 					trigger = null;
-					triggerConfigView = null;
+					triggerConfigView = null; 
 					objects.set(pos, "");
 				}else{
 					try {
@@ -193,6 +187,8 @@ public class CreateNewRuleFragment extends Fragment {
 					//NewRuleConfigAdapter.this.notifyDataSetChanged();
 				}
 				NewRuleConfigAdapter.this.notifyDataSetChanged();
+				
+				triggerSpinner.setEnabled(true); 
 			}
 
 			@Override
