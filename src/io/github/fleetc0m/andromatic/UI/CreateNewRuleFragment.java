@@ -87,12 +87,18 @@ public class CreateNewRuleFragment extends Fragment {
 		private ArrayList<String> availTriggers, availActions;
 		private ArrayAdapter<String> triggerSpinnerAdapter;
 		private ArrayAdapter<String> actionSpinnerAdapter;
+		
+		private View chooseTriggerView;
+		private View chooseActionView;
+		
+		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
 			super(context, resource, objects);
 			this.context = context;
 			this.objects = objects;
 			trigListener = new TriggerSpinnnerOnClickListener();
 			actionListener = new ActionSpinnerOnClickListener();
+
 		}
 		
 		public void configure(ArrayList<String> availTriggers,
@@ -104,42 +110,43 @@ public class CreateNewRuleFragment extends Fragment {
 			this.availActions = availActions;
 			this.actionMap = actionMap;
 			
-			triggerSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, availTriggers);
-			actionSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, availActions);
-
+			triggerSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, availTriggers);
+			actionSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, availActions);
+			
+			LayoutInflater i = (LayoutInflater) 
+					context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+			chooseTriggerView = i.inflate(R.layout.choose_trigger_entry, null);
+			Spinner ts = (Spinner)chooseTriggerView.findViewById(R.id.choose_trigger_spinner);
+			ts.setAdapter(triggerSpinnerAdapter);
+			ts.setOnItemSelectedListener(trigListener);
+			
+			chooseActionView = i.inflate(R.layout.choose_action_entry, null);
+			Spinner as = (Spinner) chooseActionView.findViewById(R.id.choose_action_spinner);
+			as.setAdapter(actionSpinnerAdapter);
+			as.setOnItemSelectedListener(actionListener);
 		}
 		
 		@Override
 		public View getView(int pos, View cacheView, ViewGroup parent){
 			//TODO:
-			if((cacheView != null) && 
+			if(
+					(cacheView != null) && 
 					(cacheView.getTag() != null) &&( 
 					cacheView.getTag().equals(objects.get(pos)))){
 				return cacheView;
 			}
 			switch(pos){
 			case 0:{
-				LayoutInflater inflater = (LayoutInflater) 
-						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-				View view = inflater.inflate(R.layout.choose_trigger_entry, null);
-				Spinner triggerSpinner = (Spinner)view.findViewById(R.id.choose_trigger_spinner);
-				triggerSpinner.setAdapter(triggerSpinnerAdapter);
-				triggerSpinner.setOnItemSelectedListener(trigListener);
-				//TODO: add trigger spinner
-				return view;
+				return chooseTriggerView;
 			}
 			case 1:{
+				if(triggerConfigView != null){
+					Log.d(TAG, "triggerConfigView not null");
+				}
 				return triggerConfigView != null ? triggerConfigView : new View(context);
 				}
 			case 2:{
-				LayoutInflater inflater = (LayoutInflater) 
-						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-				View view = inflater.inflate(R.layout.choose_action_entry, null);
-				Spinner actionSpinner = (Spinner) view.findViewById(R.id.choose_action_spinner);
-				actionSpinner.setAdapter(actionSpinnerAdapter);
-				actionSpinner.setOnItemSelectedListener(actionListener);
-				//TODO: add spinner
-				return view;
+				return chooseActionView;
 				}
 			case 3:{
 				LayoutInflater inflater = (LayoutInflater) 
@@ -154,7 +161,7 @@ public class CreateNewRuleFragment extends Fragment {
 		}
 		
 		private class TriggerSpinnnerOnClickListener implements OnItemSelectedListener{
-			private static final String TAG = "TriggerSpinnerOnClickListener";
+			private static final String TAG = "TSOCL";
 			@SuppressWarnings("unchecked")
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
@@ -164,24 +171,28 @@ public class CreateNewRuleFragment extends Fragment {
 					trigger = null;
 					triggerConfigView = null;
 					objects.set(pos, "");
-					return;
+				}else{
+					try {
+						Class <? extends Trigger> triggerClass = (Class<? extends Trigger>)
+								Class.forName(triggerMap.get(availTriggers.get(pos)));
+						trigger = triggerClass.newInstance();
+						trigger.setContext(context);
+						triggerConfigView = trigger.getConfigView();
+						triggerConfigView.setTag(availTriggers.get(pos));
+						objects.set(pos, availTriggers.get(pos));
+					} catch (ClassNotFoundException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					} catch (java.lang.InstantiationException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					}
+					//NewRuleConfigAdapter.this.notifyDataSetChanged();
 				}
-				try {
-					Class <? extends Trigger> triggerClass = (Class<? extends Trigger>)
-							Class.forName(triggerMap.get(availTriggers.get(pos)));
-					trigger = triggerClass.newInstance();
-					trigger.setContext(context);
-					triggerConfigView = trigger.getConfigView();
-					triggerConfigView.setTag(availTriggers.get(pos));
-					objects.set(pos, availTriggers.get(pos));
-					
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (java.lang.InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
+				NewRuleConfigAdapter.this.notifyDataSetChanged();
 			}
 
 			@Override
