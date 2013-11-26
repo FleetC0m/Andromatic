@@ -3,18 +3,24 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.github.fleetc0m.andromatic.R;
+import io.github.fleetc0m.andromatic.action.Action;
+import io.github.fleetc0m.andromatic.trigger.Trigger;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 public class CreateNewRuleFragment extends Fragment {
 	//public final String TITLE = getResources().getString(R.string.create_new_rule_fragment_title);
@@ -38,6 +44,18 @@ public class CreateNewRuleFragment extends Fragment {
 		triggerClassMap = new HashMap<String, String>();
 		availActions = new ArrayList<String>();
 		actionClassMap = new HashMap<String, String>();
+		init();
+	}
+	
+	private void init(){
+		availTriggers.add("");
+		availActions.add("");
+		
+		triggerClassMap.put("SMS Incoming", "io.github.fleetc0m.andromatic.trigger.SMSReceivedTrigger");
+		availTriggers.add("SMS Incoming");
+		actionClassMap.put("Change ringtone volume", 
+				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
+		availActions.add("Change ringtone volume");
 	}
 	
 	@Override
@@ -51,6 +69,7 @@ public class CreateNewRuleFragment extends Fragment {
 		configListView = (ListView)rootView.findViewById(R.id.list);
 		NewRuleConfigAdapter adapter = new NewRuleConfigAdapter(this.getActivity(), android.R.id.list,
 				titleForListView);
+		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap);
 		configListView.setAdapter(adapter);
 		return rootView;
 	}
@@ -60,14 +79,34 @@ public class CreateNewRuleFragment extends Fragment {
 		private ArrayList<String> objects;
 		private View triggerConfigView;
 		private View ActionConfigView;
+		private Trigger trigger;
+		private Action action;
 		private TriggerSpinnnerOnClickListener trigListener;
 		private ActionSpinnerOnClickListener actionListener;
+		private HashMap<String, String> triggerMap, actionMap;
+		private ArrayList<String> availTriggers, availActions;
+		private ArrayAdapter<String> triggerSpinnerAdapter;
+		private ArrayAdapter<String> actionSpinnerAdapter;
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
 			super(context, resource, objects);
 			this.context = context;
 			this.objects = objects;
 			trigListener = new TriggerSpinnnerOnClickListener();
 			actionListener = new ActionSpinnerOnClickListener();
+		}
+		
+		public void configure(ArrayList<String> availTriggers,
+				HashMap<String, String> triggerMap,
+				ArrayList<String> availActions,
+				HashMap<String, String> actionMap){
+			this.availTriggers = availTriggers;
+			this.triggerMap = triggerMap;
+			this.availActions = availActions;
+			this.actionMap = actionMap;
+			
+			triggerSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, availTriggers);
+			actionSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item, availActions);
+
 		}
 		
 		@Override
@@ -84,23 +123,21 @@ public class CreateNewRuleFragment extends Fragment {
 						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				View view = inflater.inflate(R.layout.choose_trigger_entry, null);
 				Spinner triggerSpinner = (Spinner)view.findViewById(R.id.choose_trigger_spinner);
-				triggerSpinner.setOnClickListener(trigListener);
+				triggerSpinner.setAdapter(triggerSpinnerAdapter);
+				triggerSpinner.setOnItemSelectedListener(trigListener);
 				//TODO: add trigger spinner
 				return view;
 			}
 			case 1:{
-				LayoutInflater inflater = (LayoutInflater) 
-						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-				View view = new View(context);
-				//TODO:
-				return view;
+				return triggerConfigView != null ? triggerConfigView : new View(context);
 				}
 			case 2:{
 				LayoutInflater inflater = (LayoutInflater) 
 						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 				View view = inflater.inflate(R.layout.choose_action_entry, null);
 				Spinner actionSpinner = (Spinner) view.findViewById(R.id.choose_action_spinner);
-				actionSpinner.setOnClickListener(actionListener);
+				actionSpinner.setAdapter(actionSpinnerAdapter);
+				actionSpinner.setOnItemSelectedListener(actionListener);
 				//TODO: add spinner
 				return view;
 				}
@@ -115,24 +152,60 @@ public class CreateNewRuleFragment extends Fragment {
 				throw new IllegalArgumentException("invalid pos");
 			}
 		}
-		private class TriggerSpinnnerOnClickListener implements OnClickListener{
+		
+		private class TriggerSpinnnerOnClickListener implements OnItemSelectedListener{
+			private static final String TAG = "TriggerSpinnerOnClickListener";
+			@SuppressWarnings("unchecked")
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int pos, long id) {
+				Log.d(TAG, "clicked, pos " + pos);
+				if(pos == 0){
+					trigger = null;
+					triggerConfigView = null;
+					objects.set(pos, "");
+					return;
+				}
+				try {
+					Class <? extends Trigger> triggerClass = (Class<? extends Trigger>)
+							Class.forName(triggerMap.get(availTriggers.get(pos)));
+					trigger = triggerClass.newInstance();
+					trigger.setContext(context);
+					triggerConfigView = trigger.getConfigView();
+					triggerConfigView.setTag(availTriggers.get(pos));
+					objects.set(pos, availTriggers.get(pos));
+					
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (java.lang.InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
 
 			@Override
-			public void onClick(View arg0) {
+			public void onNothingSelected(AdapterView<?> arg0) {
 				// TODO Auto-generated method stub
 				
 			}
-			
 		}
 		
-		private class ActionSpinnerOnClickListener implements OnClickListener{
+		private class ActionSpinnerOnClickListener implements OnItemSelectedListener{
 
 			@Override
-			public void onClick(View v) {
+			public void onItemSelected(AdapterView<?> arg0, View arg1,
+					int arg2, long arg3) {
 				// TODO Auto-generated method stub
 				
 			}
-			
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
 		}
 	}
 	

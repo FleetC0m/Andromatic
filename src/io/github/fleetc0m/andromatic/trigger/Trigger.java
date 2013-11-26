@@ -33,6 +33,10 @@ public abstract class Trigger {
 		this.savedRule = savedRule;
 	}
 	
+	public void setContext(Context context){
+		this.context = context;
+	}
+	
 	public Trigger(Context context){
 		this.context = context;
 	}
@@ -43,14 +47,14 @@ public abstract class Trigger {
 	 * @param savedVars
 	 * @return
 	 */
-	public abstract View getConfigView(LayoutInflater inflator, Bundle b);
+	public abstract View getConfigView(Bundle b);
 	
 	/**
 	 * Get an unfilled view at add new rule fragment.
 	 * @param inflator
 	 * @return
 	 */
-	public abstract View getEmptyConfigView(LayoutInflater inflator);
+	public abstract View getConfigView();
 	
 	/**
 	 * Query whether to fire this trigger.
