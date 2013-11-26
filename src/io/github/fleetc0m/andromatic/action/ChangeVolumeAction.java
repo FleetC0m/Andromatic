@@ -1,6 +1,7 @@
 package io.github.fleetc0m.andromatic.action;
 
 import io.github.fleetc0m.andromatic.R;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,7 @@ public class ChangeVolumeAction extends Action {
 	private SeekBar seekbar;
 	
 	@Override
-	public void setArgs(Bundle arg) {
+	public void setArgs(String arg) {
 
 	}
 
@@ -22,8 +23,9 @@ public class ChangeVolumeAction extends Action {
 	}
 
 	@Override
-	public View getConfigView(LayoutInflater inflator, Bundle b) {
-		View view = inflator.inflate(R.layout.change_volume_action, null);
+	public View getConfigView(Bundle b) {
+		LayoutInflater i = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		View view = i.inflate(R.layout.change_volume_action, null);
 		seekbar = (SeekBar) view.findViewById(R.id.change_volume_action_seekbar);
 		seekbar.setMax(10);
 		int pos = b.getInt(Volume, -1);
@@ -34,8 +36,14 @@ public class ChangeVolumeAction extends Action {
 	}
 
 	@Override
-	public View getEmptyConfigView(LayoutInflater inflator) {
-		return getConfigView(inflator, new Bundle());
+	public View getConfigView() {
+		return getConfigView(new Bundle());
+	}
+
+	@Override
+	public String saveConfig(View view) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
