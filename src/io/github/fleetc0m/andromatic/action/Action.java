@@ -1,5 +1,6 @@
 package io.github.fleetc0m.andromatic.action;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,16 @@ public abstract class Action {
 	 */
 	protected static final String CLASS_NAME = "io.github.fleetc0m.andromatic.Action";
 	
+	protected Context context;
+	public void setContext(Context context){
+		this.context = context;
+	}
+	
 	/**
 	 * Set the argument of this action.
 	 * @param arg
 	 */
-	public abstract void setArgs(Bundle arg);
+	public abstract void setArgs(String arg);
 	
 	/**
 	 * Execute this action. 
@@ -36,13 +42,21 @@ public abstract class Action {
 	 * @param savedVars
 	 * @return
 	 */
-	public abstract View getConfigView(LayoutInflater inflator, Bundle b);
+	public abstract View getConfigView(Bundle b);
 	
 	/**
 	 * Get an unfilled view at add new rule fragment.
 	 * @param inflator
 	 * @return
 	 */
-	public abstract View getEmptyConfigView(LayoutInflater inflator);
+	public abstract View getConfigView();
+	
+	/**
+	 * Get the string representation of current config in the 
+	 * config view.
+	 * @param view The view returned by getConfigView()
+	 * @return The string representation of config info
+	 */
+	public abstract String saveConfig(View view);
 	
 }
