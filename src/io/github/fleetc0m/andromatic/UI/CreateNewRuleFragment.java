@@ -79,7 +79,7 @@ public class CreateNewRuleFragment extends Fragment {
 		private Context context;
 		private ArrayList<String> objects;
 		private View triggerConfigView;
-		private View ActionConfigView;
+		private View actionConfigView;
 		private Trigger trigger;
 		private Action action;
 		private TriggerSpinnnerOnClickListener trigListener;
@@ -142,11 +142,7 @@ public class CreateNewRuleFragment extends Fragment {
 				return chooseActionView;
 				}
 			case 3:{
-				LayoutInflater inflater = (LayoutInflater) 
-						context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-				View view = new View(context);
-				//TODO:
-				return view;
+				return actionConfigView != null ? actionConfigView : new View(context);
 			}
 			default:
 				throw new IllegalArgumentException("invalid pos");
@@ -192,25 +188,46 @@ public class CreateNewRuleFragment extends Fragment {
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
-			}
+			public void onNothingSelected(AdapterView<?> arg0) {}
 		}
 		
 		private class ActionSpinnerOnClickListener implements OnItemSelectedListener{
 
+			@SuppressWarnings("unchecked")
 			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1,
-					int arg2, long arg3) {
-				// TODO Auto-generated method stub
-				
+			public void onItemSelected(AdapterView<?> parent, View arg1,
+					int pos, long id) {
+				actionSpinner.setEnabled(false);
+				if(pos == 0){
+					action = null;
+					actionConfigView = null;
+					objects.set(pos, "");
+				}else{
+					try {
+						Class <? extends Action> actionClass = (Class<? extends Action>)
+								Class.forName(actionMap.get(availActions.get(pos)));
+						action = actionClass.newInstance();
+						action.setContext(context);
+						actionConfigView = action.getConfigView();
+						actionConfigView.setTag(availActions.get(pos));
+						objects.set(pos, availActions.get(pos));
+					} catch (ClassNotFoundException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					} catch (java.lang.InstantiationException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						Log.e(TAG, e.getMessage());
+						e.printStackTrace();
+					}
+				}
+				NewRuleConfigAdapter.this.notifyDataSetChanged();
+				actionSpinner.setEnabled(true);
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
-				
 			}
 
 		}
