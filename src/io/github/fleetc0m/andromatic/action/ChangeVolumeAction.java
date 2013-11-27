@@ -41,13 +41,13 @@ public class ChangeVolumeAction extends Action {
 	}
 
 	@Override
-	public String getConfigString(View view) {
+	public String getConfigString() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getHumanReadableString(View view) {
+	public String getHumanReadableString() {
 		// TODO Auto-generated method stub
 		return null;
 	}

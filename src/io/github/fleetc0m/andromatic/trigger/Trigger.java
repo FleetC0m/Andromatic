@@ -68,7 +68,17 @@ public abstract class Trigger {
 	 * @param view The view returned by getConfigView()
 	 * @return The string representation of config info
 	 */
-	public abstract String getConfigString(View view);
+	public abstract String getConfigString();
+	
+	
+	/**
+	 * Get the intent action this trigger wants to listen to.
+	 * This string will be compared against intent.getAction() 
+	 * to decide whether to instantiate this trigger so they must
+	 * be exactly the same.
+	 * @return
+	 */
+	public abstract String getIntentAction();
 	
 	/**
 	 * Get the human readable representation of the defined rule.
@@ -76,7 +86,7 @@ public abstract class Trigger {
 	 * @param view
 	 * @return
 	 */
-	public abstract String getHumanReadableString(View view);
+	public abstract String getHumanReadableString();
 	
 	/**
 	 * Translate the defined rule get from getConfigString to a human

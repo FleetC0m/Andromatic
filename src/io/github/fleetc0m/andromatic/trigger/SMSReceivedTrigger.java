@@ -54,19 +54,25 @@ public class SMSReceivedTrigger extends Trigger {
 
 
 	@Override
-	public String getConfigString(View view) {
+	public String getConfigString() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getHumanReadableString(View view) {
+	public String getHumanReadableString() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String getHumanReadableString(String rule) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getIntentAction() {
 		// TODO Auto-generated method stub
 		return null;
 	}

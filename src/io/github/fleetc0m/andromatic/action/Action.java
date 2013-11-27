@@ -58,7 +58,7 @@ public abstract class Action {
 	 * @param view The view returned by getConfigView()
 	 * @return The string representation of config info
 	 */
-	public abstract String getConfigString(View view);
+	public abstract String getConfigString();
 	
 	/**
 	 * Get the human readable representation of the defined rule.
@@ -66,7 +66,7 @@ public abstract class Action {
 	 * @param view
 	 * @return
 	 */
-	public abstract String getHumanReadableString(View view);
+	public abstract String getHumanReadableString();
 	
 	/**
 	 * Translate the defined rule get from getConfigString to a human

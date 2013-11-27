@@ -94,12 +94,7 @@ public class CreateNewRuleFragment extends Fragment {
 		private Spinner triggerSpinner;
 		private Spinner actionSpinner;
 		
-		public Spinner getTriggerSpinner(){
-			return triggerSpinner;
-		}
-		public Spinner getActionSpinner(){
-			return actionSpinner;
-		}
+
 		
 		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
@@ -109,6 +104,19 @@ public class CreateNewRuleFragment extends Fragment {
 			trigListener = new TriggerSpinnnerOnClickListener();
 			actionListener = new ActionSpinnerOnClickListener();
 
+		}
+		public Spinner getTriggerSpinner(){
+			return triggerSpinner;
+		}
+		public Spinner getActionSpinner(){
+			return actionSpinner;
+		}
+		
+		public Trigger getTrigger(){
+			return trigger;
+		}
+		public Action getAction(){
+			return action;
 		}
 		
 		public void configure(ArrayList<String> availTriggers,
@@ -251,7 +259,10 @@ public class CreateNewRuleFragment extends Fragment {
 	public class SaveActionListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
-			//TODO:
+			String triggerRule = adapter.getTrigger().getConfigString();
+			String actionRule = adapter.getAction().getConfigString();
+			String triggerIntent = adapter.getTrigger().getIntentAction();
+			//TODO: Write into database.
 		}
 	}
 }
