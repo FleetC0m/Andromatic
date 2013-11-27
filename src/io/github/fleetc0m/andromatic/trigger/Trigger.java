@@ -61,14 +61,38 @@ public abstract class Trigger {
 	 * @return
 	 */
 	public abstract boolean trig();
+	/**
+	 * Get the string representation of current config in the 
+	 * config view. This string is stored in the database as
+	 * is, and will be provided to the action class through setArgs.
+	 * @param view The view returned by getConfigView()
+	 * @return The string representation of config info
+	 */
+	public abstract String getConfigString();
+	
 	
 	/**
-	 * Get the string representation of the info 
-	 * in the configView which can be used to write into
-	 * the database. 
-	 * @param configView This should be the same view
-	 * get from getConfigView or getEmptyConfigView
-	 * @return the 
+	 * Get the intent action this trigger wants to listen to.
+	 * This string will be compared against intent.getAction() 
+	 * to decide whether to instantiate this trigger so they must
+	 * be exactly the same.
+	 * @return
 	 */
-	public abstract String saveConfig(View configView);
+	public abstract String getIntentAction();
+	
+	/**
+	 * Get the human readable representation of the defined rule.
+	 * This string is displayed in the user interface.
+	 * @param view
+	 * @return
+	 */
+	public abstract String getHumanReadableString();
+	
+	/**
+	 * Translate the defined rule get from getConfigString to a human
+	 * readable string.
+	 * @param rule The rule String
+	 * @return a human readable string.
+	 */
+	public abstract String getHumanReadableString(String rule);
 }
