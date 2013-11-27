@@ -1,5 +1,8 @@
 package io.github.fleetc0m.andromatic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -43,6 +46,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
+		Log.d(LOG_TAG, "Create a trigger table in the database");
 		db.execSQL(TABLE_CREATE);
 	}
 
@@ -71,10 +75,16 @@ public class SQLHandler extends SQLiteOpenHelper{
 		values.put(ACTION_RULE, bundle.getString(ACTION_RULE));
 		values.put(INTENT_TYPE, bundle.getString(INTENT_TYPE));
 		long rowid = db.insert(TABLE_NAME, null, values);
+		Log.d(LOG_TAG, "A trigger added to the database: " + bundle.getString(TRIGGER_NAME));
 		db.close();
 		return rowid;
 	}
 	
+	/**
+	 * Get a trigger bundle by row id
+	 * @param rowid
+	 * @return Trigger bundle
+	 */
 	public Bundle getTriggerById(long rowid){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -94,9 +104,15 @@ public class SQLHandler extends SQLiteOpenHelper{
 		bundle.putString(ACTION_RULE, cursor.getString(5));
 		bundle.putString(INTENT_TYPE, cursor.getString(6));
 		db.close();
+		Log.d(LOG_TAG, "Trigger Id: " + rowid + "Trigger Name: " + cursor.getString(1));
 		return bundle;
 	}
 	
+	/**
+	 * Return a trigger by trigger name
+	 * @param triggerName
+	 * @return bundle
+	 */
 	public Bundle getTriggerByName(String triggerName){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
@@ -118,6 +134,115 @@ public class SQLHandler extends SQLiteOpenHelper{
 		db.close();
 		return bundle;
 	}
+	
+	public List<Bundle> getAllTriggers(){
+		List<Bundle> triggerList = new ArrayList<Bundle>();
+        String selectQuery = "SELECT * FROM " + TABLE_NAME;
+        
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        
+        if (cursor.moveToFirst()) {
+            do {
+            	Bundle bundle = new Bundle();
+            	
+        		bundle.putLong(TRIGGER_ID, cursor.getLong(0));
+        		bundle.putString(TRIGGER_NAME, cursor.getString(1));
+        		bundle.putString(CLASS_NAME, cursor.getString(2));
+        		bundle.putString(TRIGGER_RULE, cursor.getString(3));
+        		bundle.putString(ACTION_NAME, cursor.getString(4));
+        		bundle.putString(ACTION_RULE, cursor.getString(5));
+        		bundle.putString(INTENT_TYPE, cursor.getString(6));
+        		
+        		triggerList.add(bundle);
+            } while (cursor.moveToNext());
+        }
+        db.close();
+        return triggerList;
+		
+	}
+	
+	/**
+	 * Update a trigger by row id
+	 * @param bundle
+	 * @return row id
+	 */
+	public long updateTriggerById(Bundle bundle){
+		if(bundle == null){
+			return -1;
+		}
+        SQLiteDatabase db = this.getWritableDatabase();
+        
+		ContentValues values = new ContentValues();
+		
+		if(bundle.containsKey(TRIGGER_NAME)){
+			values.put(TRIGGER_NAME, bundle.getString(TRIGGER_NAME));
+		}
+		if(bundle.containsKey(CLASS_NAME)){
+			values.put(CLASS_NAME, bundle.getString(CLASS_NAME));
+		}
+		if(bundle.containsKey(TRIGGER_RULE)){
+			values.put(TRIGGER_RULE, bundle.getString(TRIGGER_RULE));
+		}
+		if(bundle.containsKey(ACTION_NAME)){
+			values.put(ACTION_NAME, bundle.getString(ACTION_NAME));
+		}
+		if(bundle.containsKey(ACTION_RULE)){
+			values.put(ACTION_RULE, bundle.getString(ACTION_RULE));
+		}
+		if(bundle.containsKey(INTENT_TYPE)){
+			values.put(INTENT_TYPE, bundle.getString(INTENT_TYPE));
+		}
+		
+		long rowid = db.update(TABLE_NAME, values, TRIGGER_ID + " = ?",new String[] { String.valueOf(bundle.getLong(TRIGGER_ID)) });
+		Log.d(LOG_TAG, "Updated a trigger in the database: " + bundle.getString(TRIGGER_NAME));
+		db.close();
+        return rowid;
+        
+	}
+	/**
+	 * Get a count of triggers in the database
+	 * @return count of triggers
+	 */
+    public int getTriggersCount() {
+        String countQuery = "SELECT * FROM " + TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int count = cursor.getCount();
+        Log.d(LOG_TAG, "Get trigger count: " + count);
+        db.close();
+        return count;
+    }
+    
+    public void deleteTriggerById(long rowid){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
+        db.close();
+    }
+    
+    public void testDatabase(){
+    	
+    	Bundle bundle = new Bundle();
+		
+		bundle.putString(TRIGGER_NAME, "TEST_TRIGGER");
+		bundle.putString(CLASS_NAME, "TEST_CLASS");
+		bundle.putString(TRIGGER_RULE, "TRIGGER_RULE");
+		bundle.putString(ACTION_NAME, "ACTION_NAME");
+		bundle.putString(ACTION_RULE, "ACTION_RULE");
+		bundle.putString(INTENT_TYPE, "INTENT_TYPE");
+    	long rowid = this.addTrigger(bundle);
+    	
+    	Bundle returnBundle = this.getTriggerById(rowid);
+    	int triggerCount = this.getTriggersCount();
+    	Log.d(LOG_TAG,"Test Database: " + returnBundle.getString(ACTION_RULE) + "Count: " + triggerCount);
+    	
+    	List<Bundle> arrayList = this.getAllTriggers();
+    	
+    	for(int i = 0; i < arrayList.size(); i++){
+    		
+        	Log.d(LOG_TAG,"Test Database: " + arrayList.get(i).getString(ACTION_RULE));
+    	}
+    }
 	
 
 }
