@@ -34,7 +34,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		+ TRIGGER_RULE + TEXT_TYPE + ","
 		+ ACTION_NAME + TEXT_TYPE + ","
 		+ ACTION_RULE + TEXT_TYPE + ","
-		+ INTENT_TYPE + BOOLEAN_TYPE
+		+ INTENT_TYPE + TEXT_TYPE
 		+ " )";
 	
 	public SQLHandler(Context context) {
@@ -69,7 +69,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		values.put(TRIGGER_RULE, bundle.getString(TRIGGER_RULE));
 		values.put(ACTION_NAME, bundle.getString(ACTION_NAME));
 		values.put(ACTION_RULE, bundle.getString(ACTION_RULE));
-		values.put(INTENT_TYPE, bundle.getBoolean(INTENT_TYPE));
+		values.put(INTENT_TYPE, bundle.getString(INTENT_TYPE));
 		long rowid = db.insert(TABLE_NAME, null, values);
 		db.close();
 		return rowid;
