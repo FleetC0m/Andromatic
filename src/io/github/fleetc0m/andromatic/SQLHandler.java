@@ -75,7 +75,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		values.put(INTENT_TYPE, bundle.getString(INTENT_TYPE));
 		long rowid = db.insert(TABLE_NAME, null, values);
 		Log.d(LOG_TAG, "A trigger added to the database: " + bundle.getString(TRIGGER_NAME));
-		db.close();
+
 		return rowid;
 	}
 	
@@ -104,7 +104,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		bundle.putString(ACTION_NAME, cursor.getString(4));
 		bundle.putString(ACTION_RULE, cursor.getString(5));
 		bundle.putString(INTENT_TYPE, cursor.getString(6));
-		db.close();
+
 		Log.d(LOG_TAG, "Trigger Id: " + rowid + "Trigger Name: " + cursor.getString(1));
 		return bundle;
 	}
@@ -132,7 +132,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		bundle.putString(ACTION_NAME, cursor.getString(4));
 		bundle.putString(ACTION_RULE, cursor.getString(5));
 		bundle.putString(INTENT_TYPE, cursor.getString(6));
-		db.close();
+
 		return bundle;
 	}
 	
@@ -162,7 +162,7 @@ public class SQLHandler extends SQLiteOpenHelper{
         		triggerList.add(bundle);
             } while (cursor.moveToNext());
         }
-        db.close();
+
         return triggerList;
 		
 	}
@@ -201,7 +201,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		
 		long rowid = db.update(TABLE_NAME, values, TRIGGER_ID + " = ?",new String[] { String.valueOf(bundle.getLong(TRIGGER_ID)) });
 		Log.d(LOG_TAG, "Updated a trigger in the database: " + bundle.getString(TRIGGER_NAME));
-		db.close();
+
         return rowid;
         
 	}
@@ -216,7 +216,7 @@ public class SQLHandler extends SQLiteOpenHelper{
         Cursor cursor = db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         Log.d(LOG_TAG, "Get trigger count: " + count);
-        db.close();
+
         return count;
     }
     
@@ -227,7 +227,7 @@ public class SQLHandler extends SQLiteOpenHelper{
     public void deleteTriggerById(long rowid){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
-        db.close();
+
     }
     
     public void testDatabase(){
