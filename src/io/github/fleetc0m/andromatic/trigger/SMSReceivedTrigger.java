@@ -57,4 +57,10 @@ public class SMSReceivedTrigger extends Trigger {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String getHumanReadableRule() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

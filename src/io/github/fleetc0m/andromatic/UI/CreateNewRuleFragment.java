@@ -32,7 +32,7 @@ public class CreateNewRuleFragment extends Fragment {
 	private HashMap<String, String> triggerClassMap;
 	private ArrayList<String> availActions;
 	private HashMap<String, String> actionClassMap;
-	
+	private NewRuleConfigAdapter adapter;
 	public CreateNewRuleFragment(){
 		this.context = this.getActivity();
 		titleForListView = new ArrayList<String>();
@@ -68,7 +68,7 @@ public class CreateNewRuleFragment extends Fragment {
 		Button saveBtn = (Button) rootView.findViewById(R.id.save_button);
 		saveBtn.setOnClickListener(new SaveActionListener());
 		configListView = (ListView)rootView.findViewById(R.id.list);
-		NewRuleConfigAdapter adapter = new NewRuleConfigAdapter(this.getActivity(), android.R.id.list,
+		adapter = new NewRuleConfigAdapter(this.getActivity(), android.R.id.list,
 				titleForListView);
 		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap);
 		configListView.setAdapter(adapter);
@@ -94,6 +94,13 @@ public class CreateNewRuleFragment extends Fragment {
 		private Spinner triggerSpinner;
 		private Spinner actionSpinner;
 		
+		public Spinner getTriggerSpinner(){
+			return triggerSpinner;
+		}
+		public Spinner getActionSpinner(){
+			return actionSpinner;
+		}
+		
 		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
 			super(context, resource, objects);
@@ -113,8 +120,11 @@ public class CreateNewRuleFragment extends Fragment {
 			this.availActions = availActions;
 			this.actionMap = actionMap;
 			
-			triggerSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, availTriggers);
-			actionSpinnerAdapter = new ArrayAdapter<String>(context, android.R.layout.simple_dropdown_item_1line, availActions);
+			triggerSpinnerAdapter = new ArrayAdapter<String>
+							(context, android.R.layout.simple_dropdown_item_1line, availTriggers);
+			actionSpinnerAdapter = new ArrayAdapter<String>
+							(context, android.R.layout.simple_dropdown_item_1line, availActions);
+			//triggerSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			
 			LayoutInflater i = (LayoutInflater) 
 					context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -160,7 +170,6 @@ public class CreateNewRuleFragment extends Fragment {
 				if(pos == 0){
 					trigger = null;
 					triggerConfigView = null; 
-					objects.set(pos, "");
 				}else{
 					try {
 						Class <? extends Trigger> triggerClass = (Class<? extends Trigger>)
@@ -201,7 +210,6 @@ public class CreateNewRuleFragment extends Fragment {
 				if(pos == 0){
 					action = null;
 					actionConfigView = null;
-					objects.set(pos, "");
 				}else{
 					try {
 						Class <? extends Action> actionClass = (Class<? extends Action>)
@@ -227,9 +235,7 @@ public class CreateNewRuleFragment extends Fragment {
 			}
 
 			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-			}
-
+			public void onNothingSelected(AdapterView<?> arg0) {}
 		}
 	}
 	
@@ -237,7 +243,8 @@ public class CreateNewRuleFragment extends Fragment {
 	public class CancelActionListener implements OnClickListener{
 		@Override
 		public void onClick(View arg0) {	
-			//TODO:
+			adapter.getTriggerSpinner().setSelection(0, true);
+			adapter.getActionSpinner().setSelection(0, true);
 		}
 	}
 	

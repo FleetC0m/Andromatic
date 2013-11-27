@@ -71,4 +71,6 @@ public abstract class Trigger {
 	 * @return the 
 	 */
 	public abstract String saveConfig(View configView);
+	
+	public abstract String getHumanReadableRule();
 }

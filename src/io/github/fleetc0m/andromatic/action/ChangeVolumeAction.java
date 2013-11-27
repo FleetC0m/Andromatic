@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.SeekBar;
 
 public class ChangeVolumeAction extends Action {
-	private static String Volume = "volume";
+	private static final String VOLUME_FIELD = "volume";
 	private SeekBar seekbar;
 	
 	@Override
@@ -28,7 +28,7 @@ public class ChangeVolumeAction extends Action {
 		View view = i.inflate(R.layout.change_volume_action, null);
 		seekbar = (SeekBar) view.findViewById(R.id.change_volume_action_seekbar);
 		seekbar.setMax(10);
-		int pos = b.getInt(Volume, -1);
+		int pos = b.getInt(VOLUME_FIELD, -1);
 		if(pos != -1){
 			seekbar.setProgress(pos);
 		}
