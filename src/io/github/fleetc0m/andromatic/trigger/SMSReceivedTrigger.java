@@ -52,14 +52,21 @@ public class SMSReceivedTrigger extends Trigger {
 		return false;
 	}
 
+
 	@Override
-	public String saveConfig(View configView) {
+	public String getConfigString(View view) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public String getHumanReadableRule() {
+	public String getHumanReadableString(View view) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getHumanReadableString(String rule) {
 		// TODO Auto-generated method stub
 		return null;
 	}
