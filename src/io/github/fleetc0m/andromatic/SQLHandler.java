@@ -12,12 +12,11 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class SQLHandler extends SQLiteOpenHelper{
-	public static final String LOG_TAG = "SQLHandler";
-	public static final int DATABASE_VERSION = 1;
-	public static final String DATABASE_NAME = "Andromatic.db";
-	public static final String TABLE_NAME = "triggers";
-	public static final String TEXT_TYPE = " TEXT";
-	public static final String BOOLEAN_TYPE = " BOOLEAN";
+	private static final String LOG_TAG = "SQLHandler";
+	private static final int DATABASE_VERSION = 1;
+	private static final String DATABASE_NAME = "Andromatic.db";
+	private static final String TABLE_NAME = "triggers";
+	private static final String TEXT_TYPE = " TEXT";
 	
 	public static final String TRIGGER_NAME = "triggername";
 	public static final String TRIGGER_ID = "_id";
@@ -29,7 +28,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	
 	private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + TABLE_NAME;
 	
-	public static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
+	private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
 		+ " (" 
 		+ TRIGGER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 		+ TRIGGER_NAME + TEXT_TYPE + ","
@@ -46,8 +45,8 @@ public class SQLHandler extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		Log.d(LOG_TAG, "Create a trigger table in the database");
 		db.execSQL(TABLE_CREATE);
+		Log.d(LOG_TAG, "Created a trigger table in the database");
 	}
 
 	@Override
@@ -83,15 +82,17 @@ public class SQLHandler extends SQLiteOpenHelper{
 	/**
 	 * Get a trigger bundle by row id
 	 * @param rowid
-	 * @return Trigger bundle
+	 * @return Trigger bundle or null
 	 */
 	public Bundle getTriggerById(long rowid){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, TRIGGER_NAME, CLASS_NAME, TRIGGER_RULE, ACTION_NAME, ACTION_RULE, INTENT_TYPE}, TRIGGER_ID + "=?", new String[]{String.valueOf(rowid)}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, TRIGGER_NAME, CLASS_NAME, TRIGGER_RULE, ACTION_NAME, ACTION_RULE, INTENT_TYPE}, TRIGGER_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
+		}else{
+			return null;
 		}
 		
 		Bundle bundle = new Bundle();
@@ -135,6 +136,10 @@ public class SQLHandler extends SQLiteOpenHelper{
 		return bundle;
 	}
 	
+	/**
+	 * Get a list of Bundle triggers
+	 * @return Bundle List
+	 */
 	public List<Bundle> getAllTriggers(){
 		List<Bundle> triggerList = new ArrayList<Bundle>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
@@ -200,6 +205,7 @@ public class SQLHandler extends SQLiteOpenHelper{
         return rowid;
         
 	}
+	
 	/**
 	 * Get a count of triggers in the database
 	 * @return count of triggers
@@ -214,6 +220,10 @@ public class SQLHandler extends SQLiteOpenHelper{
         return count;
     }
     
+    /**
+     * Delete a trigger in the database
+     * @param rowid
+     */
     public void deleteTriggerById(long rowid){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
