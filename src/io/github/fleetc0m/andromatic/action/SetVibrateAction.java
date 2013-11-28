@@ -13,11 +13,6 @@ import android.widget.Switch;
 public class SetVibrateAction extends Action{
 	private static final String CHECKED_FIELD= "checked";
 	private Switch vibrateSwitch;
-	
-	@Override
-	public void setArgs(String arg) {
-	
-	}
 
 	@Override
 	//http://stackoverflow.com/questions/7317974/android-mute-unmute-phone
@@ -33,7 +28,7 @@ public class SetVibrateAction extends Action{
 	}
 
 	@Override
-	public View getConfigView(Bundle b) {
+	public View getConfigView(String savedRule) {
 		LayoutInflater i = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = i.inflate(R.layout.set_vibrate_action, null);
 		vibrateSwitch = (Switch) view.findViewById(R.id.set_vibrate_action);

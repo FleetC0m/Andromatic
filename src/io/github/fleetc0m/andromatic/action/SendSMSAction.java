@@ -15,15 +15,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SendSMSAction extends Action{
+	
+	public SendSMSAction(Context context, String savedRule) {
+		super(context, savedRule);
+	}
+
 	private static final String PHONE_NUM_FIELD = "phone number";
 	private static final String MSG_FIELD = "message";
 	private EditText phoneNumEdit;
 	private EditText msgEdit;
-	@Override
-	public void setArgs(String arg) {
-		
-	}
 
+	
 	@Override
 	public boolean act() {
 		String phoneNo = phoneNumEdit.getText().toString();
@@ -100,7 +102,7 @@ public class SendSMSAction extends Action{
         sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);        
     }	
 	@Override
-	public View getConfigView(Bundle b) {
+	public View getConfigView(String savedRule) {
 		// TODO Auto-generated method stub
 		LayoutInflater i = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = i.inflate(R.layout.sms_send_action, null);
@@ -119,7 +121,7 @@ public class SendSMSAction extends Action{
 
 	@Override
 	public View getConfigView(){
-		return getConfigView(new Bundle());
+		return getConfigView(null);
 	}
 
 	@Override

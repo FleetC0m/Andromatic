@@ -22,12 +22,18 @@ public abstract class Action {
 	protected Context context;
 	protected String savedRule;
 	
+	public Action(){
+		this(null,null);
+	}
+	
 	public Action(Context context, String savedRule){
 		this.context = context;
 		this.savedRule = savedRule;
 	}
 	
-	
+	public void setContext(Context context){
+		this.context = context;
+	}
 	/**
 	 * Execute this action. 
 	 * @return true on succeed. false on failure.
