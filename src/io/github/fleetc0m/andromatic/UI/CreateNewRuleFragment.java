@@ -341,6 +341,7 @@ public class CreateNewRuleFragment extends Fragment {
 				b.putString(SQLHandler.ACTION_RULE, actionRule);
 				b.putString(SQLHandler.INTENT_TYPE, triggerIntent);
 				b.putString(SQLHandler.RULE_NAME, ruleName);
+				b.putBoolean(SQLHandler.POLLING_TYPE, needPolling);
 				SQLHandler h = new SQLHandler(context);
 				h.addRule(b);
 				return null;
