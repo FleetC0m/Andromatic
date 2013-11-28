@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/incoming_call_trigger_number"
+       	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/incoming_call_trigger_number"/>
+    
+        <EditText 
+        android:id="@+id/incoming_call_trigger_number_edit"
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/incoming_call_trigger_number_hint"/>
+
+</LinearLayout>
