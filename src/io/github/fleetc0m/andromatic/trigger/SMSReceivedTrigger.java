@@ -27,17 +27,18 @@ public class SMSReceivedTrigger extends Trigger {
 	}
 	
 	@Override
-	public View getConfigView(Bundle b) {
+	public View getConfigView(String savedRule) {
 		LayoutInflater inflater = (LayoutInflater) 
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.sms_received_trigger, null);
 		phoneNumEdit = (EditText) view.findViewById(R.id.sms_received_trigger_phone_num_edit);
-		keywordEdit = (EditText) view.findViewById(R.id.sms_received_trigger_keyword_edit);
-		String phoneNum = b.getString(PHONE_NUM_FIELD);
+		keywordEdit = (EditText) view.findViewById(R.id.sms_received_trigger_keyword_edit);		
+		if(savedRule==null) return view;
+		String phoneNum = savedRule.split(" ",2)[0];
 		if(phoneNum != null){
 			phoneNumEdit.setText(phoneNum);
 		}
-		String keyword = b.getString(KEYWORD_FIELD);
+		String keyword = savedRule.split(" ",2)[1];
 		if(keyword != null){
 			keywordEdit.setText(keyword);
 		}
@@ -46,7 +47,7 @@ public class SMSReceivedTrigger extends Trigger {
 
 	@Override
 	public View getConfigView() {
-		return getConfigView(new Bundle());
+		return getConfigView(null);
 	}
 
 	@Override
@@ -56,6 +57,8 @@ public class SMSReceivedTrigger extends Trigger {
 		
 		SmsMessage[] msgs = null;
 		String msg_from="";
+		String phone_no = savedRule.split(" ",2)[0];
+		String msg = savedRule.split(" ",2)[1];
 		if(b!=null){
 			Object[] pdus = (Object[])b.get("pdus");
 			msgs = new SmsMessage[pdus.length];
@@ -63,8 +66,8 @@ public class SMSReceivedTrigger extends Trigger {
 				msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
 				msg_from = msgs[i].getOriginatingAddress();
 				String msgBody = msgs[i].getMessageBody();
-				if(phoneNumEdit.getText().toString().equals(msg_from)){
-					if(msgBody.indexOf(phoneNumEdit.getText().toString())!=-1){
+				if(phone_no.equals(msg_from)){
+					if(msgBody.indexOf(msg)!=-1){
 						return true;
 					}
 				}
@@ -90,13 +93,12 @@ public class SMSReceivedTrigger extends Trigger {
 	@Override
 	public String getHumanReadableString(String rule) {
 		// TODO Auto-generated method stub
-		return "When a message from "+rule.split(" ")[0]+" with keyword "+rule.split(" ")[1]+
+		return "When a message from "+rule.split(" ",2)[0]+" with keyword "+rule.split(" ",2)[1]+
 				" is received";
 	}
 
 	@Override
 	public String getIntentAction() {
-		// TODO Auto-generated method stub
 		return "android.provider.Telephony.SMS_RECEIVED";
 	}
 
