@@ -66,7 +66,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * @param bundle
 	 * @return trigger id
 	 */
-	public long addTrigger(Bundle bundle){
+	public long addRule(Bundle bundle){
 		if(bundle == null) 
 			return -1;
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -94,7 +94,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * @param rowid
 	 * @return Trigger bundle or null
 	 */
-	public Bundle getTriggerById(long rowid){
+	public Bundle getRuleById(long rowid){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, TRIGGER_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
@@ -132,7 +132,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * @param triggerName
 	 * @return bundle
 	 */
-	public Bundle getTriggerByName(String ruleName){
+	public Bundle getRuleByName(String ruleName){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
 		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, RULE_NAME + "=?", new String[]{ruleName}, null, null, null);
@@ -166,7 +166,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * Get a list of Bundle triggers
 	 * @return Bundle List
 	 */
-	public List<Bundle> getAllTriggers(){
+	public List<Bundle> getAllRules(){
 		List<Bundle> triggerList = new ArrayList<Bundle>();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         
@@ -206,7 +206,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * @param bundle
 	 * @return row id
 	 */
-	public long updateTriggerById(Bundle bundle){
+	public long updateRuleById(Bundle bundle){
 		if(bundle == null){
 			return -1;
 		}
@@ -252,7 +252,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	 * Get a count of triggers in the database
 	 * @return count of triggers
 	 */
-    public int getTriggersCount() {
+    public int getRuleCount() {
         String countQuery = "SELECT * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -266,7 +266,7 @@ public class SQLHandler extends SQLiteOpenHelper{
      * Delete a trigger in the database
      * @param rowid
      */
-    public void deleteTriggerById(long rowid){
+    public void deleteRuleById(long rowid){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
 
@@ -283,16 +283,16 @@ public class SQLHandler extends SQLiteOpenHelper{
 		bundle.putString(ACTION_RULE, "ACTION_RULE");
 		bundle.putString(INTENT_TYPE, "INTENT_TYPE");
 		bundle.putBoolean(POLLING_TYPE, false);
-    	long rowid = this.addTrigger(bundle);
+    	long rowid = this.addRule(bundle);
     	
-    	Bundle returnBundle = this.getTriggerById(rowid);
-    	int triggerCount = this.getTriggersCount();
+    	Bundle returnBundle = this.getRuleById(rowid);
+    	int triggerCount = this.getRuleCount();
     	Log.d(LOG_TAG,"Test Database: " + returnBundle.getString(RULE_TIMESTAMP) + "Count: " + triggerCount);
     	Bundle bundle2 = new Bundle();
     	bundle2.putString(RULE_NAME, "NEW_RULE_NAME");
     	bundle2.putLong(TRIGGER_ID, 5);
-    	this.updateTriggerById(bundle2);
-    	List<Bundle> arrayList = this.getAllTriggers();
+    	this.updateRuleById(bundle2);
+    	List<Bundle> arrayList = this.getAllRules();
     	
     	for(int i = 0; i < arrayList.size(); i++){
     		
