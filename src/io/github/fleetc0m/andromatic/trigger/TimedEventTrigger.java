@@ -13,8 +13,6 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 
 public class TimedEventTrigger extends Trigger {
-	public static final String START_TIME_FIELD = "start time";
-	public static final String END_TIME_FIELD = "end time";
 
 	private TimePicker startTimeEdit;
 	private TimePicker endTimeEdit;

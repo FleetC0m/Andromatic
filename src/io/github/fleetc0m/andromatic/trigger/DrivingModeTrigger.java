@@ -12,47 +12,48 @@ import android.view.View;
 import android.widget.EditText;
 
 public class DrivingModeTrigger extends Trigger{
-	
-	public static final String SPEED_FIELD = "speed";
+
 	private EditText speedEdit;
 	private String speed;
 	private float curr_speed;
+	LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+	LocationListener locationListener = new LocationListener(){
+		@Override
+		public void onLocationChanged(Location location) {
+			// TODO Auto-generated method stub
+			curr_speed = (float) (location.getSpeed()*2.2369);
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status,
+				Bundle extras) {
+		}
+	};
+	
 	public DrivingModeTrigger(){
 		super(null);
 	}
 	
 	public DrivingModeTrigger(Context context){
 		super(context);
-		LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-		LocationListener locationListener = new LocationListener(){
-			@Override
-			public void onLocationChanged(Location location) {
-				// TODO Auto-generated method stub
-				curr_speed = (float) (location.getSpeed()*2.2369);
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status,
-					Bundle extras) {
-			}
-		};
+		
 	}
 	@Override
-	public View getConfigView(Bundle b) {
+	public View getConfigView(String savedRule) {
 		// TODO Auto-generated method stub
 		LayoutInflater inflater = (LayoutInflater) 
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.driving_mode_trigger, null);
 		speedEdit = (EditText) view.findViewById(R.id.driving_mode_trigger_prompt_speed_edit);
-		String speed = b.getString(SPEED_FIELD);
+		String speed = savedRule;
 		if(speed != null){
 			speedEdit.setText(speed);
 			this.speed = speed;
@@ -63,12 +64,12 @@ public class DrivingModeTrigger extends Trigger{
 	@Override
 	public View getConfigView() {
 		// TODO Auto-generated method stub
-		return getConfigView(new Bundle());
+		return getConfigView(null);
 	}
 
 	@Override
 	public boolean trig() {
-		return curr_speed>=Float.parseFloat(speed);
+		return curr_speed>=Float.parseFloat(savedRule);
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class DrivingModeTrigger extends Trigger{
 	@Override
 	public String getHumanReadableString(String rule) {
 		// TODO Auto-generated method stub
-		return "You set "+rule+" as the speed. When your speed exceeds "+rule;
+		return "You set "+rule+" as the speed. When your speed exceeds "+rule+", the action will be performed";
 	}
 
 	@Override
