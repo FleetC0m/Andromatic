@@ -54,15 +54,18 @@ public class CreateNewRuleFragment extends Fragment {
 		triggerClassMap.put("SMS Incoming", "io.github.fleetc0m.andromatic.trigger.SMSReceivedTrigger");
 		availTriggers.add("SMS Incoming");
 		
-		actionClassMap.put("Change ringtone volume", 
-				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
-		availActions.add("Change ringtone volume");
-		
 		triggerClassMap.put("Timed Event", "io.github.fleetc0m.andromatic.trigger.TimedEventTrigger");
 		availTriggers.add("Timed Event");
 		
 		triggerClassMap.put("Driving Mode", "io.github.fleetc0m.andromatic.trigger.DrivingModeTrigger");
 		availTriggers.add("Driving Mode");
+		
+		triggerClassMap.put("Phone Incoming", "io.github.fleetc0m.andromatic.trigger.IncomingCallTrigger");
+		availTriggers.add("Phone Incoming");
+		
+		actionClassMap.put("Change ringtone volume", 
+				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
+		availActions.add("Change ringtone volume");
 		
 		actionClassMap.put("Send sms", 
 				"io.github.fleetc0m.andromatic.action.SendSMSAction");
@@ -81,7 +84,7 @@ public class CreateNewRuleFragment extends Fragment {
 		configListView = (ListView)rootView.findViewById(R.id.list);
 		adapter = new NewRuleConfigAdapter(this.getActivity(), android.R.id.list,
 				titleForListView);
-		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap);
+		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap, saveBtn);
 		configListView.setAdapter(adapter);
 		return rootView;
 	}
@@ -105,6 +108,8 @@ public class CreateNewRuleFragment extends Fragment {
 		private Spinner triggerSpinner;
 		private Spinner actionSpinner;
 		
+		private boolean readyStat;
+		private Button saveBtn;
 
 		
 		private static final String TAG = "NRCA";
@@ -114,7 +119,7 @@ public class CreateNewRuleFragment extends Fragment {
 			this.objects = objects;
 			trigListener = new TriggerSpinnnerOnClickListener();
 			actionListener = new ActionSpinnerOnClickListener();
-
+			readyStat = false;
 		}
 		public Spinner getTriggerSpinner(){
 			return triggerSpinner;
@@ -130,10 +135,15 @@ public class CreateNewRuleFragment extends Fragment {
 			return action;
 		}
 		
+		public boolean readyToSave(){
+			return readyStat;
+		}
 		public void configure(ArrayList<String> availTriggers,
 				HashMap<String, String> triggerMap,
 				ArrayList<String> availActions,
-				HashMap<String, String> actionMap){
+				HashMap<String, String> actionMap,
+				Button saveBtn){
+			this.saveBtn = saveBtn;
 			this.availTriggers = availTriggers;
 			this.triggerMap = triggerMap;
 			this.availActions = availActions;
@@ -197,7 +207,7 @@ public class CreateNewRuleFragment extends Fragment {
 						trigger.setContext(context);
 						triggerConfigView = trigger.getConfigView();
 						triggerConfigView.setTag(availTriggers.get(pos));
-						objects.set(pos, availTriggers.get(pos));
+						objects.set(1, availTriggers.get(pos));
 					} catch (ClassNotFoundException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
@@ -213,6 +223,13 @@ public class CreateNewRuleFragment extends Fragment {
 				NewRuleConfigAdapter.this.notifyDataSetChanged();
 				
 				triggerSpinner.setEnabled(true); 
+				if(trigger != null && action != null){
+					readyStat = true;
+					saveBtn.setEnabled(true);
+				}else{
+					readyStat = false;
+					saveBtn.setEnabled(false);
+				}
 			}
 
 			@Override
@@ -237,7 +254,7 @@ public class CreateNewRuleFragment extends Fragment {
 						action.setContext(context);
 						actionConfigView = action.getConfigView();
 						actionConfigView.setTag(availActions.get(pos));
-						objects.set(pos, availActions.get(pos));
+						objects.set(3, availActions.get(pos));
 					} catch (ClassNotFoundException e) {
 						Log.e(TAG, e.getMessage());
 						e.printStackTrace();
@@ -251,6 +268,13 @@ public class CreateNewRuleFragment extends Fragment {
 				}
 				NewRuleConfigAdapter.this.notifyDataSetChanged();
 				actionSpinner.setEnabled(true);
+				if(trigger != null && action != null){
+					readyStat = true;
+					saveBtn.setEnabled(true);
+				}else{
+					readyStat = false;
+					saveBtn.setEnabled(false);
+				}
 			}
 
 			@Override
@@ -270,9 +294,13 @@ public class CreateNewRuleFragment extends Fragment {
 	public class SaveActionListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
+			if(!adapter.readyToSave()){
+				return;
+			}
 			String triggerRule = adapter.getTrigger().getConfigString();
 			String actionRule = adapter.getAction().getConfigString();
 			String triggerIntent = adapter.getTrigger().getIntentAction();
+			
 			//TODO: Write into database.
 		}
 	}
