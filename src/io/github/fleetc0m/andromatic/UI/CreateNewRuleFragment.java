@@ -3,10 +3,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import io.github.fleetc0m.andromatic.R;
+import io.github.fleetc0m.andromatic.SQLHandler;
 import io.github.fleetc0m.andromatic.action.Action;
 import io.github.fleetc0m.andromatic.trigger.Trigger;
 import android.app.Activity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,15 +21,18 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Toast;
 
 public class CreateNewRuleFragment extends Fragment {
 	//public final String TITLE = getResources().getString(R.string.create_new_rule_fragment_title);
 	
 	private Context context;
 	private ListView configListView;
+	private EditText ruleNameField;
 	private ArrayList<String> titleForListView;
 	private ArrayList<String> availTriggers;
 	private HashMap<String, String> triggerClassMap;
@@ -86,6 +92,7 @@ public class CreateNewRuleFragment extends Fragment {
 				titleForListView);
 		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap, saveBtn);
 		configListView.setAdapter(adapter);
+		ruleNameField = (EditText) rootView.findViewById(R.id.rule_name_field);
 		return rootView;
 	}
 	
@@ -292,16 +299,57 @@ public class CreateNewRuleFragment extends Fragment {
 	}
 	
 	public class SaveActionListener implements OnClickListener{
+		private String triggerClassName;
+		private String triggerRule;
+		private String triggerDescription;
+		private String actionClassName;
+		private String actionRule;
+		private String actionDescription;
+		private String triggerIntent;
+		private boolean needPolling;
+		private String ruleName;
 		@Override
 		public void onClick(View v) {
 			if(!adapter.readyToSave()){
 				return;
 			}
-			String triggerRule = adapter.getTrigger().getConfigString();
-			String actionRule = adapter.getAction().getConfigString();
-			String triggerIntent = adapter.getTrigger().getIntentAction();
+			ruleName = ruleNameField.getText().toString();
 			
+			triggerClassName = triggerClassMap.get( 
+					availTriggers.get(adapter.getTriggerSpinner().getSelectedItemPosition()));
+			triggerRule = adapter.getTrigger().getConfigString();
+			triggerDescription = adapter.getTrigger().getHumanReadableString();
+			
+			actionClassName = actionClassMap.get(
+					availActions.get(adapter.getActionSpinner().getSelectedItemPosition()));
+			actionRule = adapter.getAction().getConfigString();
+			actionDescription = adapter.getAction().getHumanReadableString();
+			triggerIntent = adapter.getTrigger().getIntentAction();
+			needPolling = adapter.getTrigger().needPolling();
+			new SaveToDBTask().execute(new Bundle[]{});
+
 			//TODO: Write into database.
+		}
+		private class SaveToDBTask extends AsyncTask<Bundle, Integer, Integer>{
+
+			@Override
+			protected Integer doInBackground(Bundle... params) {
+				Bundle b = new Bundle();
+				b.putString(SQLHandler.TRIGGER_CLASS_NAME, triggerClassName);
+				b.putString(SQLHandler.TRIGGER_RULE, triggerRule);
+				b.putString(SQLHandler.ACTION_CLASS_NAME, actionClassName);
+				b.putString(SQLHandler.ACTION_RULE, actionRule);
+				b.putString(SQLHandler.INTENT_TYPE, triggerIntent);
+				b.putString(SQLHandler.RULE_NAME, ruleName);
+				SQLHandler h = new SQLHandler(context);
+				h.addRule(b);
+				return null;
+			}
+			@Override
+			protected void onPostExecute(Integer param){
+				String description = triggerDescription + ", " + actionDescription + " recorded.";
+				Toast.makeText(context, description, Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 }

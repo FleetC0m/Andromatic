@@ -4,6 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
+    <TextView 
+        android:id="@+id/rule_name_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/rule_name_prompt"/>
+    
+    <EditText
+        android:id="@+id/rule_name_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:hint="@string/optional"
+        ></EditText>
     
     <ListView 
         android:id="@+id/list"

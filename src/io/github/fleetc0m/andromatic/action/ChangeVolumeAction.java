@@ -26,7 +26,7 @@ public class ChangeVolumeAction extends Action {
 		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
 		audioManager.setStreamVolume(AudioManager.STREAM_RING,(int)maxVolume*curr_progress/10,
 				 AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
-		return false;
+		return true;
 	}
 
 	@Override
