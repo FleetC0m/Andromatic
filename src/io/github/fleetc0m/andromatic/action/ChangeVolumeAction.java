@@ -55,13 +55,11 @@ public class ChangeVolumeAction extends Action {
 
 	@Override
 	public String getHumanReadableString() {
-		// TODO Auto-generated method stub
-		return getHumanReadableString(getConfigString());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		// TODO Auto-generated method stub
 		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		int curr_progress = Integer.parseInt(rule);
 		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);

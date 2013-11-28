@@ -108,11 +108,12 @@ public class SendSMSAction extends Action{
 		View view = i.inflate(R.layout.sms_send_action, null);
 		phoneNumEdit = (EditText) view.findViewById(R.id.sms_send_action_prompt_phone_no);
 		msgEdit = (EditText) view.findViewById(R.id.sms_send_action_prompt_msg);
-		String phoneNum = b.getString(PHONE_NUM_FIELD);
+		if(savedRule==null) return view;
+		String phoneNum = savedRule.split(" ",2)[0];
 		if(phoneNum != null){
 			phoneNumEdit.setText(phoneNum);
 		}
-		String msg = b.getString(MSG_FIELD);
+		String msg = savedRule.split(" ",2)[1];
 		if(msg != null){
 			msgEdit.setText(msg);
 		}
@@ -132,7 +133,7 @@ public class SendSMSAction extends Action{
 
 	@Override
 	public String getHumanReadableString(){
-		return getHumanReadableString(getConfigString());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override

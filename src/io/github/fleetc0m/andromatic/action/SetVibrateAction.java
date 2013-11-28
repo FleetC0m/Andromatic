@@ -32,14 +32,15 @@ public class SetVibrateAction extends Action{
 		LayoutInflater i = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = i.inflate(R.layout.set_vibrate_action, null);
 		vibrateSwitch = (Switch) view.findViewById(R.id.set_vibrate_action);
-		boolean checked = b.getBoolean(CHECKED_FIELD);
+		if(savedRule==null) return view;
+		boolean checked = Boolean.parseBoolean(savedRule);
 		vibrateSwitch.setChecked(checked);
 		return view;
 	}
 
 	@Override
 	public View getConfigView() {
-		return getConfigView(new Bundle());
+		return getConfigView(null);
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class SetVibrateAction extends Action{
 
 	@Override
 	public String getHumanReadableString() {
-		return getHumanReadableString(getConfigString());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override
