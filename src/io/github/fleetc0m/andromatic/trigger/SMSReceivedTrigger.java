@@ -99,4 +99,9 @@ public class SMSReceivedTrigger extends Trigger {
 		// TODO Auto-generated method stub
 		return "android.provider.Telephony.SMS_RECEIVED";
 	}
+
+	@Override
+	public boolean needPolling() {
+		return false;
+	}
 }

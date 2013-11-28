@@ -88,6 +88,11 @@ public class IncomingCallTrigger extends Trigger {
 		
 		return "When an incoming call phone number: " + rule +  " is received";
 	}
+
+	@Override
+	public boolean needPolling() {
+		return false;
+	}
 	
 
 
