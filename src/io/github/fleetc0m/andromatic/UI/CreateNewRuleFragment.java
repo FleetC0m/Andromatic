@@ -39,8 +39,10 @@ public class CreateNewRuleFragment extends Fragment {
 	private ArrayList<String> availActions;
 	private HashMap<String, String> actionClassMap;
 	private NewRuleConfigAdapter adapter;
+	private SQLHandler sqlHandler;
+	
 	public CreateNewRuleFragment(){
-		this.context = this.getActivity();
+
 		titleForListView = new ArrayList<String>();
 		titleForListView.add("trigger");
 		titleForListView.add("");
@@ -82,6 +84,8 @@ public class CreateNewRuleFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, 
 			Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
+		this.context = this.getActivity();
+		sqlHandler = new SQLHandler(context);
 		View rootView = inflater.inflate(R.layout.new_rule_fragment, container, false);
 		Button cancelBtn = (Button)rootView.findViewById(R.id.cancel_button);
 		cancelBtn.setOnClickListener(new CancelActionListener());
@@ -342,8 +346,8 @@ public class CreateNewRuleFragment extends Fragment {
 				b.putString(SQLHandler.INTENT_TYPE, triggerIntent);
 				b.putString(SQLHandler.RULE_NAME, ruleName);
 				b.putBoolean(SQLHandler.POLLING_TYPE, needPolling);
-				SQLHandler h = new SQLHandler(context);
-				h.addRule(b);
+
+				sqlHandler.addRule(b);
 				return null;
 			}
 			@Override
