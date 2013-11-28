@@ -23,6 +23,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	private static final String TABLE_NAME = "triggers";
 	private static final String TEXT_TYPE = " TEXT";
 	private static final String INTEGER_TYPE = " INTEGER";
+	private int CURRENT_VERSION = 1;
 	
 	public static final String RULE_NAME = "rulename";
 	public static final String TRIGGER_ID = "_id";
@@ -275,6 +276,13 @@ public class SQLHandler extends SQLiteOpenHelper{
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
 
+    }
+    /**
+     * Delete all rules in the database and recreate the table
+     */
+    public void deleteAllRules(){
+    	this.onUpgrade(this.getWritableDatabase(), CURRENT_VERSION, CURRENT_VERSION + 1);
+    	CURRENT_VERSION++;
     }
     
     public void testDatabase(){
