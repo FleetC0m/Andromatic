@@ -27,6 +27,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	public static final String ACTION_RULE = "actionrule";
 	public static final String INTENT_TYPE = "intenttype";
 	public static final String POLLING_TYPE = "pollingbool";
+	public static final String RULE_TIMESTAMP = "ruletimestamp";
 	
 	private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + TABLE_NAME;
 	
@@ -39,7 +40,8 @@ public class SQLHandler extends SQLiteOpenHelper{
 		+ ACTION_CLASS_NAME + TEXT_TYPE + ","
 		+ ACTION_RULE + TEXT_TYPE + ","
 		+ INTENT_TYPE + TEXT_TYPE + ","
-		+ POLLING_TYPE + INTEGER_TYPE
+		+ POLLING_TYPE + INTEGER_TYPE + ","
+		+ RULE_TIMESTAMP + " TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
 		+ " )";
 	
 	public SQLHandler(Context context) {
@@ -95,7 +97,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	public Bundle getTriggerById(long rowid){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE}, TRIGGER_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, TRIGGER_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
@@ -118,6 +120,8 @@ public class SQLHandler extends SQLiteOpenHelper{
 		}else{
 			bundle.putBoolean(POLLING_TYPE, false);
 		}
+		
+		bundle.putString(RULE_TIMESTAMP, cursor.getString(8));
 
 		Log.d(LOG_TAG, "Trigger Id: " + rowid + "Trigger Name: " + cursor.getString(1));
 		return bundle;
@@ -131,7 +135,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	public Bundle getTriggerByName(String ruleName){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE}, RULE_NAME + "=?", new String[]{ruleName}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, RULE_NAME + "=?", new String[]{ruleName}, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
@@ -152,6 +156,8 @@ public class SQLHandler extends SQLiteOpenHelper{
 		}else{
 			bundle.putBoolean(POLLING_TYPE, false);
 		}
+		
+		bundle.putString(RULE_TIMESTAMP, cursor.getString(8));
 		
 		return bundle;
 	}
@@ -184,6 +190,8 @@ public class SQLHandler extends SQLiteOpenHelper{
         		}else{
         			bundle.putBoolean(POLLING_TYPE, false);
         		}
+        		
+        		bundle.putString(RULE_TIMESTAMP, cursor.getString(8));
         		
         		triggerList.add(bundle);
             } while (cursor.moveToNext());
@@ -279,13 +287,16 @@ public class SQLHandler extends SQLiteOpenHelper{
     	
     	Bundle returnBundle = this.getTriggerById(rowid);
     	int triggerCount = this.getTriggersCount();
-    	Log.d(LOG_TAG,"Test Database: " + returnBundle.getString(ACTION_RULE) + "Count: " + triggerCount);
-    	
+    	Log.d(LOG_TAG,"Test Database: " + returnBundle.getString(RULE_TIMESTAMP) + "Count: " + triggerCount);
+    	Bundle bundle2 = new Bundle();
+    	bundle2.putString(RULE_NAME, "NEW_RULE_NAME");
+    	bundle2.putLong(TRIGGER_ID, 5);
+    	this.updateTriggerById(bundle2);
     	List<Bundle> arrayList = this.getAllTriggers();
     	
     	for(int i = 0; i < arrayList.size(); i++){
     		
-        	Log.d(LOG_TAG,"Test Database: " + arrayList.get(i).getString(ACTION_RULE));
+        	Log.d(LOG_TAG,"Test Database: " + arrayList.get(i).getString(RULE_TIMESTAMP));
     	}
     }
 	
