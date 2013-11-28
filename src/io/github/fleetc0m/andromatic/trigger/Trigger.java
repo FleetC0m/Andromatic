@@ -47,7 +47,7 @@ public abstract class Trigger {
 	 * @param savedVars
 	 * @return
 	 */
-	public abstract View getConfigView(Bundle b);
+	public abstract View getConfigView(String savedRule);
 	
 	/**
 	 * Get an unfilled view at add new rule fragment.
