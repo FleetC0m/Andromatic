@@ -17,6 +17,7 @@ Triggers:
 
 
 Actions:
+
 1.  Mute/unmute/change ringtone volume and ring the phone.(implemented)
 
 2.  Send SMS with customized content.(implemented)
@@ -26,9 +27,21 @@ Actions:
 4.  Take a picture. (Use at your own risk!)
 
 
-Others:
 
-Synchronize your rules in the cloud so when you change a device, you don't need to define your rules again.
+Settings:
+
+1.  Username and password.
+
+2.  Checkbox: enable auto backup to cloud.
+
+3.  Back up now
+
+4.  Restore now
+
+5. Delete all rules.
+
+6.  About us
+
 
 If you want other features,
 ---------------------------

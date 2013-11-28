@@ -95,4 +95,9 @@ public abstract class Trigger {
 	 * @return a human readable string.
 	 */
 	public abstract String getHumanReadableString(String rule);
+	
+	/**
+	 * Identify whether this trigger needs polling
+	 */
+	public abstract boolean needPolling();
 }

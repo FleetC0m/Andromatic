@@ -4,6 +4,7 @@ import io.github.fleetc0m.andromatic.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,8 +12,9 @@ import android.widget.EditText;
 public class IncomingCallTrigger extends Trigger {
 
 	public static final String PHONE_NUM_FIELD = "phone number";
-	
-	private EditText phoneNumber;
+	public static final String INCOMINGCALL_INTENT = "android.intent.action.PHONE_STATE";
+
+	private EditText phoneEdit;
 	
 	public IncomingCallTrigger(){
 		super(null);
@@ -20,6 +22,7 @@ public class IncomingCallTrigger extends Trigger {
 	
 	public IncomingCallTrigger(Context context){
 		super(context);
+
 	}
 	
 	
@@ -29,11 +32,11 @@ public class IncomingCallTrigger extends Trigger {
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.incoming_call_trigger, null);
 		
-		phoneNumber = (EditText) view.findViewById(R.id.incoming_call_trigger_number_edit);
+		phoneEdit = (EditText) view.findViewById(R.id.incoming_call_trigger_number_edit);
 		String phoneNum = b.getString(PHONE_NUM_FIELD);
 		
 		if(phoneNum != null){
-			phoneNumber.setText(phoneNum);
+			phoneEdit.setText(phoneNum);
 		}
 		
 		return view;
@@ -47,32 +50,50 @@ public class IncomingCallTrigger extends Trigger {
 
 	@Override
 	public boolean trig() {
-		// TODO Auto-generated method stub
-		return false;
+			if(incomingIntent == null){
+				return false;
+			}
+			
+			Bundle bundle = incomingIntent.getExtras();
+			String incomingNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+			if(incomingNumber != null && phoneEdit.getText() != null && phoneEdit.getText().toString().equals(incomingNumber)){
+				return true;
+			}else{
+				return false;
+			}
+		
 	}
 
 	@Override
 	public String getConfigString() {
-		// TODO Auto-generated method stub
-		return null;
+		if(phoneEdit == null){
+			return null;
+		}
+		return phoneEdit.getText().toString();
 	}
 
 	@Override
 	public String getIntentAction() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return INCOMINGCALL_INTENT;
 	}
 
 	@Override
 	public String getHumanReadableString() {
-		// TODO Auto-generated method stub
-		return null;
+		return getHumanReadableString(getConfigString());
 	}
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "When an incoming call phone number: " + rule +  " is received";
 	}
+
+	@Override
+	public boolean needPolling() {
+		return false;
+	}
+	
+
 
 }

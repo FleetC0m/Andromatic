@@ -95,4 +95,9 @@ public class DrivingModeTrigger extends Trigger{
 		return "You set "+rule+" as the speed. When your speed exceeds "+rule;
 	}
 
+	@Override
+	public boolean needPolling() {
+		return true;
+	}
+
 }
