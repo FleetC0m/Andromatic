@@ -27,13 +27,13 @@ public class IncomingCallTrigger extends Trigger {
 	
 	
 	@Override
-	public View getConfigView(Bundle b) {
+	public View getConfigView(String configStr) {
 		LayoutInflater inflater = (LayoutInflater) 
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.incoming_call_trigger, null);
 		
 		phoneEdit = (EditText) view.findViewById(R.id.incoming_call_trigger_number_edit);
-		String phoneNum = b.getString(PHONE_NUM_FIELD);
+		String phoneNum = configStr;
 		
 		if(phoneNum != null){
 			phoneEdit.setText(phoneNum);
@@ -45,7 +45,7 @@ public class IncomingCallTrigger extends Trigger {
 	@Override
 	public View getConfigView() {
 
-		return getConfigView(new Bundle());
+		return getConfigView(null);
 	}
 
 	@Override
