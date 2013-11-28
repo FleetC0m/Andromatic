@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+		android:text="@string/sms_send_action_prompt_phone_no_hint" />
+
+    <EditText
+		android:id="@+id/sms_send_action_prompt_phone_no"
+		android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sms_send_action_prompt_msg_hint" />
+
+	<EditText
+		android:id="@+id/sms_send_action_prompt_msg"
+        android:layout_width="fill_parent"
+		android:layout_height="150px"
+        android:gravity="top" />
+</LinearLayout>

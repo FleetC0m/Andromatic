@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:id="@+id/driving_mode_trigger_prompt_speed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/driving_mode_trigger_prompt_speed"/>
+    <EditText 
+        android:id="@+id/driving_mode_trigger_prompt_speed_edit"
+        android:inputType="phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/driving_mode_trigger_prompt_speed_hint"/>"
+	
+
+</LinearLayout>

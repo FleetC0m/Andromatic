@@ -2,6 +2,8 @@ package io.github.fleetc0m.andromatic.action;
 
 import io.github.fleetc0m.andromatic.R;
 import android.app.Activity;
+import android.content.Context;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +20,12 @@ public class ChangeVolumeAction extends Action {
 
 	@Override
 	public boolean act() {
-		// TODO Auto-generated method stub
+		//http://stackoverflow.com/questions/7317974/android-mute-unmute-phone
+		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+		int curr_progress = seekbar.getProgress();
+		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+		audioManager.setStreamVolume(AudioManager.STREAM_RING,(int)maxVolume*curr_progress/10,
+				 AudioManager.FLAG_SHOW_UI + AudioManager.FLAG_PLAY_SOUND);
 		return false;
 	}
 
@@ -42,20 +49,24 @@ public class ChangeVolumeAction extends Action {
 
 	@Override
 	public String getConfigString() {
-		// TODO Auto-generated method stub
-		return null;
+		//
+		return ""+seekbar.getProgress();
 	}
 
 	@Override
 	public String getHumanReadableString() {
 		// TODO Auto-generated method stub
-		return null;
+		return getHumanReadableString(getConfigString());
 	}
 
 	@Override
 	public String getHumanReadableString(String rule) {
 		// TODO Auto-generated method stub
-		return null;
+		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+		int curr_progress = Integer.parseInt(rule);
+		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+		int volume = (int) seekbar.getProgress()/10*maxVolume;
+		return "the volume will be set to be "+volume;
 	}
 
 }

@@ -16,4 +16,13 @@
 	<string name="sms_received_trigger_keyword_prompt">Contains keyword:</string>
 	<string name="sms_received_trigger_keyword_hint">Blank if apply to all messages. Mulitple keywords separated by space.</string>
 	<string name="change_volume_action_prompt">Change the ringtone volume to:</string>
+	<string name="timed_event_trigger_prompt_start_time">From</string>
+	<string name="timed_event_trigger_prompt_end_time">To</string>
+	<string name="driving_mode_trigger_prompt_speed">Set a speed(mph)</string>
+	<string name="driving_mode_trigger_prompt_speed_hint">The default speed is 40 mph. </string>
+	<string name="geofence_trigger_prompt_location">Please choose a location</string>
+	<string name="sms_send_action_prompt_phone_no_hint">Enter the phone number of recipient</string>
+	<string name="sms_send_action_prompt_msg_hint">Please enter the message</string>
+	<string name="incoming_call_trigger_number">Please enter an incoming call number</string>
+    <string name="incoming_call_trigger_number_hint">Blank if apply to all incoming numbers</string>
 </resources>

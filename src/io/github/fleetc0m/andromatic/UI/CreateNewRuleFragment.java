@@ -53,9 +53,20 @@ public class CreateNewRuleFragment extends Fragment {
 		
 		triggerClassMap.put("SMS Incoming", "io.github.fleetc0m.andromatic.trigger.SMSReceivedTrigger");
 		availTriggers.add("SMS Incoming");
+		
 		actionClassMap.put("Change ringtone volume", 
 				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
 		availActions.add("Change ringtone volume");
+		
+		triggerClassMap.put("Timed Event", "io.github.fleetc0m.andromatic.trigger.TimedEventTrigger");
+		availTriggers.add("Timed Event");
+		
+		triggerClassMap.put("Driving Mode", "io.github.fleetc0m.andromatic.trigger.DrivingModeTrigger");
+		availTriggers.add("Driving Mode");
+		
+		actionClassMap.put("Send sms", 
+				"io.github.fleetc0m.andromatic.action.SendSMSAction");
+		availActions.add("Send sms");
 	}
 	
 	@Override

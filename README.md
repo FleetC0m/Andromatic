@@ -5,21 +5,21 @@ An <a href="https://ifttt.com/">IFTTT</a> for you Android Device. You can define
 Currently Support (In progress)
 ------------------
 Triggers:
-1.  SMSIncoming, handles events related to incoming messages.
+1.  SMSIncoming, handles events related to incoming messages.(implemented)
 
 2.  CalendarEvent, handles events related to calendar entries.
 
-3.  DrivingMode, handles events related to driving. For example if my moving speed is greater than 40mph, resume music.
+3.  DrivingMode, handles events related to driving. For example if my moving speed is greater than 40mph, resume music.(implemented)
 
-4.  TimedEvent, handles events related to current time. Ex: Mute the phone from 2am to 6am, unmute after I wake up.
+4.  TimedEvent, handles events related to current time. Ex: Mute the phone from 2am to 6am, unmute after I wake up.(implemented)
 
 5.  Geofence, handles events related to your location, like send an SMS to my boss when I leave my home.
 
 
 Actions:
-1.  Mute/unmute/change ringtone volume and ring the phone.
+1.  Mute/unmute/change ringtone volume and ring the phone.(implemented)
 
-2.  Send SMS with customized content.
+2.  Send SMS with customized content.(implemented)
 
 3.  Play music
 
