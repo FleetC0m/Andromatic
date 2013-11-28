@@ -34,6 +34,7 @@ public class TimedEventTrigger extends Trigger {
 		View view = inflater.inflate(R.layout.timed_event_trigger, null);
 		startTimeEdit = (TimePicker) view.findViewById(R.id.timed_event_trigger_prompt_start_time_pick);
 		endTimeEdit = (TimePicker) view.findViewById(R.id.timed_event_trigger_prompt_end_time_pick);
+		if(savedRule==null) return view;
 		String start_time = savedRule.split(" ")[0];
 		if(start_time != null){			
 			startTimeEdit.setCurrentHour(Integer.parseInt(start_time.split(":")[0]));
@@ -50,7 +51,7 @@ public class TimedEventTrigger extends Trigger {
 	@Override
 	public View getConfigView() {
 		// TODO Auto-generated method stub
-		return getConfigView(new String());
+		return getConfigView(null);
 	}
 
 	@Override
