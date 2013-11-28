@@ -20,15 +20,13 @@ public abstract class Action {
 	protected static final String CLASS_NAME = "io.github.fleetc0m.andromatic.Action";
 	
 	protected Context context;
-	public void setContext(Context context){
+	protected String savedRule;
+	
+	public Action(Context context, String savedRule){
 		this.context = context;
+		this.savedRule = savedRule;
 	}
 	
-	/**
-	 * Set the argument of this action.
-	 * @param arg
-	 */
-	public abstract void setArgs(String arg);
 	
 	/**
 	 * Execute this action. 
