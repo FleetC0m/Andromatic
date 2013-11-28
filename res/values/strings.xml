@@ -16,4 +16,6 @@
 	<string name="sms_received_trigger_keyword_prompt">Contains keyword:</string>
 	<string name="sms_received_trigger_keyword_hint">Blank if apply to all messages. Mulitple keywords separated by space.</string>
 	<string name="change_volume_action_prompt">Change the ringtone volume to:</string>
+	<string name="incoming_call_trigger_number">Please enter an incoming call number</string>
+	<string name="incoming_call_trigger_number_hint">Blank if apply to all incoming numbers</string>
 </resources>
