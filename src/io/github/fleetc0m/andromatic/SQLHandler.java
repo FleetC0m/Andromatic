@@ -10,7 +10,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
-
+/**
+ * This database stores all rules defined by user.
+ * A rule consists of a trigger and an action.
+ * @author manifesto
+ *
+ */
 public class SQLHandler extends SQLiteOpenHelper{
 	private static final String LOG_TAG = "SQLHandler";
 	private static final int DATABASE_VERSION = 1;
