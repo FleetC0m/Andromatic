@@ -24,12 +24,8 @@
 	<string name="sms_send_action_prompt_phone_no_hint">Enter the phone number of recipient</string>
 	<string name="sms_send_action_prompt_msg_hint">Please enter the message</string>
 	<string name="incoming_call_trigger_number">Please enter an incoming call number</string>
-<<<<<<< HEAD
     <string name="incoming_call_trigger_number_hint">Blank if apply to all incoming numbers</string>
     <string name="set_vibrate_action_choice">vibration</string>
-=======
-	<string name="incoming_call_trigger_number_hint">Blank if apply to all incoming numbers</string>
 	<string name="rule_name_prompt">Rule name:</string>
 	<string name="optional">(Optional)</string>
->>>>>>> afac340f5108500fe9766cf542831a15afe2df7a
 </resources>
