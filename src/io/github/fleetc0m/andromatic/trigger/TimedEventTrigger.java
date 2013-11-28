@@ -103,4 +103,9 @@ public class TimedEventTrigger extends Trigger {
 		return "from"+rule.split(" ")[0]+" to "+rule.split(" ")[1];
 	}
 
+	@Override
+	public boolean needPolling() {
+		return true;
+	}
+
 }
