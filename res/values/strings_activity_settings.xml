@@ -12,6 +12,14 @@
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Smith</string>
     <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    
+    <string name="pref_header_account_settings">Account Settings</string>
+    <string name="pref_username">Username</string>
+    <string name="pref_password_edit">Change Password</string>
+    
+    <string name="pref_title_auto_backup">Auto backup to the cloud</string>
+    <string name="pref_description_auto_backup">Your rules will be auto backup to the cloud server</string>
+    
 
     <string-array name="pref_example_list_titles">
         <item>Always</item>
@@ -45,7 +53,11 @@
         <item>-1</item>
     </string-array>
 
+    <string name="pref_sync_rules_now">Backup rules now</string>
+    <string name="pref_restore_rules_now">Restore rules now</string>
     <string name="pref_title_system_sync_settings">System sync settings</string>
+    <string name="pref_delete_all_rules">Delete all rules</string>
+    <string name="pref_about_us">About us</string>
 
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>

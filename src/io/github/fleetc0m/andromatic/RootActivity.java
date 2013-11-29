@@ -5,6 +5,7 @@ import io.github.fleetc0m.andromatic.UI.ShowAllRulesFragment;
 
 import java.util.Locale;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -65,6 +66,22 @@ public class RootActivity extends FragmentActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.root, menu);
 		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		
+	    switch (item.getItemId()) {
+	    	case R.id.action_settings:
+	    		Intent settings = new Intent(this, SettingsActivity.class);
+	    		startActivity(settings);
+	    		return true;
+	    		
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	    
+	    
 	}
 
 	/**

@@ -3,6 +3,8 @@ package io.github.fleetc0m.andromatic;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -54,6 +56,7 @@ public class SettingsActivity extends PreferenceActivity {
 	private void setupActionBar() {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// Show the Up button in the action bar.
+
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 	}
@@ -89,6 +92,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * device configuration dictates that a simplified, single-pane UI should be
 	 * shown.
 	 */
+	
 	private void setupSimplePreferencesScreen() {
 		if (!isSimplePreferences(this)) {
 			return;
@@ -97,15 +101,18 @@ public class SettingsActivity extends PreferenceActivity {
 		// In the simplified UI, fragments are not used at all and we instead
 		// use the older PreferenceActivity APIs.
 
+		PreferenceCategory fakeHeader = new PreferenceCategory(this);
+
 		// Add 'general' preferences.
 		addPreferencesFromResource(R.xml.pref_general);
 
 		// Add 'notifications' preferences, and a corresponding header.
+		/*
 		PreferenceCategory fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(R.string.pref_header_notifications);
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_notification);
-
+*/
 		// Add 'data and sync' preferences, and a corresponding header.
 		fakeHeader = new PreferenceCategory(this);
 		fakeHeader.setTitle(R.string.pref_header_data_sync);
@@ -115,9 +122,8 @@ public class SettingsActivity extends PreferenceActivity {
 		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
 		// their values. When their values change, their summaries are updated
 		// to reflect the new value, per the Android Design guidelines.
-		bindPreferenceSummaryToValue(findPreference("example_text"));
-		bindPreferenceSummaryToValue(findPreference("example_list"));
-		bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+		bindPreferenceSummaryToValue(findPreference("androidmatic_username"));
+		bindPreferenceSummaryToValue(findPreference("androidmatic_password"));
 		bindPreferenceSummaryToValue(findPreference("sync_frequency"));
 	}
 
@@ -247,8 +253,8 @@ public class SettingsActivity extends PreferenceActivity {
 			// to their values. When their values change, their summaries are
 			// updated to reflect the new value, per the Android Design
 			// guidelines.
-			bindPreferenceSummaryToValue(findPreference("example_text"));
-			bindPreferenceSummaryToValue(findPreference("example_list"));
+			bindPreferenceSummaryToValue(findPreference("androidmatic_username"));
+			bindPreferenceSummaryToValue(findPreference("androidmatic_password"));
 		}
 	}
 

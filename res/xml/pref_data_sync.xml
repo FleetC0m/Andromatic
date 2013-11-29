@@ -5,6 +5,12 @@
          dismiss it.
     -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+    <CheckBoxPreference        
+        android:defaultValue="true"
+        android:key="pref_auto_backup"
+        android:summary="@string/pref_description_auto_backup"
+        android:title="@string/pref_title_auto_backup" />
+    
     <ListPreference
         android:defaultValue="180"
         android:entries="@array/pref_sync_frequency_titles"
@@ -14,12 +20,22 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_sync_frequency" />
 
+    <Preference android:title="@string/pref_sync_rules_now" >
+        <intent android:action="android.settings.SYNC_SETTINGS" />
+    </Preference>
+    
+    <Preference android:title="@string/pref_restore_rules_now" >
+        <intent android:action="android.settings.SYNC_SETTINGS" />
+    </Preference>
+    
+ 
+        <Preference android:title="@string/pref_delete_all_rules" >
+        <intent android:action="android.settings.SYNC_SETTINGS" />
+    </Preference>
     <!--
          This preference simply launches an intent when selected. Use this UI sparingly, per
          design guidelines.
     -->
-    <Preference android:title="@string/pref_title_system_sync_settings" >
-        <intent android:action="android.settings.SYNC_SETTINGS" />
-    </Preference>
+
 
 </PreferenceScreen>
