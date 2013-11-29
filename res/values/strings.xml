@@ -29,4 +29,5 @@
 	<string name="rule_name_prompt">Rule name:</string>
 	<string name="optional">(Optional)</string>
 	<string name="showw_all_rules_title">All your rules are here. Tap to edit. </string>
+	<string name="all_rule_section_title">All Rules</string>
 </resources>

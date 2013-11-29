@@ -103,7 +103,7 @@ public class RootActivity extends FragmentActivity {
 			case 1:
 				return getString(R.string.new_rule_section_title).toUpperCase(l);
 			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+				return getString(R.string.all_rule_section_title).toUpperCase(l);
 			}
 			return null;
 		}

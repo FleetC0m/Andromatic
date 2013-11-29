@@ -34,8 +34,6 @@ public class ShowAllRulesFragment extends Fragment {
 
 	
 	public ShowAllRulesFragment(){
-		context = this.getActivity();
-		mSQLHandler = new SQLHandler(context);
 		//allEntries = new List<Bundle>();
 		triggerMap = new HashMap<String, Trigger>();
 		actionMap = new HashMap<String, Action>();
@@ -48,6 +46,8 @@ public class ShowAllRulesFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, 
 			Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
+		context = this.getActivity();
+		mSQLHandler = new SQLHandler(context);
 		adapter = new AllRuleListAdapter(this.getActivity(), android.R.id.list, allEntries);
 		View rootView = inflater.inflate(R.layout.show_all_rules_fragment, null);
 		listView = (ListView) rootView.findViewById(R.id.all_rule_list);
@@ -72,7 +72,7 @@ public class ShowAllRulesFragment extends Fragment {
 					e.printStackTrace();
 				}
 			}
-			if(!triggerMap.containsKey(actionClass)){
+			if(!actionMap.containsKey(actionClass)){
 				try {
 					actionMap.put(actionClass, (Action)Class.forName(actionClass).newInstance());
 				} catch (java.lang.InstantiationException e) {
@@ -115,7 +115,7 @@ public class ShowAllRulesFragment extends Fragment {
 			TextView nameView = (TextView)cachedView.findViewById(R.id.single_rule_name);
 			nameView.setText(object.get(pos).getString(SQLHandler.RULE_NAME));
 			TextView descriptionView = (TextView)cachedView.findViewById(R.id.single_rule_description);
-			String description = "When " + object.get(pos).getString(TRIGGER_DESCRIPTION) + ", "
+			String description = object.get(pos).getString(TRIGGER_DESCRIPTION) + ", "
 					+ object.get(pos).getString(ACTION_DESCRIPTION);
 			descriptionView.setText(description);
 			return cachedView;
