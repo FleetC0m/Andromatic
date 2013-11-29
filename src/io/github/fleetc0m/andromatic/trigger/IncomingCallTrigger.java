@@ -80,7 +80,7 @@ public class IncomingCallTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString() {
-		return getHumanReadableString(getConfigString());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override

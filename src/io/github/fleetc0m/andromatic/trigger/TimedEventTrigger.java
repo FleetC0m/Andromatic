@@ -83,8 +83,9 @@ public class TimedEventTrigger extends Trigger {
 	@Override
 	public String getConfigString() {
 		//the_start_hour:the_start_minite the_end_hour:the_end_minute
-		return startTimeEdit.getCurrentHour()+":"+startTimeEdit.getCurrentMinute()+
+		savedRule = startTimeEdit.getCurrentHour()+":"+startTimeEdit.getCurrentMinute()+
 				" "+endTimeEdit.getCurrentHour()+":"+endTimeEdit.getCurrentMinute();
+		return savedRule;
 	}
 
 	@Override
@@ -94,8 +95,7 @@ public class TimedEventTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString() {
-		return getHumanReadableString(startTimeEdit.getCurrentHour()+":"+startTimeEdit.getCurrentMinute()+
-				" "+endTimeEdit.getCurrentHour()+":"+endTimeEdit.getCurrentMinute());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override

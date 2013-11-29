@@ -11,7 +11,6 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 
 public class SetVibrateAction extends Action{
-	private static final String CHECKED_FIELD= "checked";
 	private Switch vibrateSwitch;
 
 	@Override
@@ -46,7 +45,8 @@ public class SetVibrateAction extends Action{
 	@Override
 	public String getConfigString() {
 		// whether is checked
-		return Boolean.toString(vibrateSwitch.isChecked());
+		savedRule = Boolean.toString(vibrateSwitch.isChecked());
+		return savedRule;
 	}
 
 	@Override

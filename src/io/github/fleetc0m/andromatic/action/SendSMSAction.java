@@ -20,8 +20,6 @@ public class SendSMSAction extends Action{
 		super(context, savedRule);
 	}
 
-	private static final String PHONE_NUM_FIELD = "phone number";
-	private static final String MSG_FIELD = "message";
 	private EditText phoneNumEdit;
 	private EditText msgEdit;
 
@@ -131,7 +129,8 @@ public class SendSMSAction extends Action{
 	@Override
 	public String getConfigString(){
 		// phone_num msg
-		return phoneNumEdit.getText().toString()+" "+msgEdit.getText().toString();
+		savedRule= phoneNumEdit.getText().toString()+" "+msgEdit.getText().toString();
+		return savedRule;
 	}
 
 	@Override
