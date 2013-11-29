@@ -1,7 +1,9 @@
 package io.github.fleetc0m.andromatic;
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +14,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
@@ -34,7 +37,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsActivity extends PreferenceActivity {
+public class SettingsActivity extends PreferenceActivity implements OnPreferenceClickListener{
 	/**
 	 * Determines whether to always show the simplified settings UI, where
 	 * settings are presented in a single list. When false, settings are shown
@@ -42,11 +45,14 @@ public class SettingsActivity extends PreferenceActivity {
 	 * shown on tablets.
 	 */
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
-
+	private Preference deleteAllrulesPreference;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setupActionBar();
+		
+		
 	}
 
 	/**
@@ -93,6 +99,7 @@ public class SettingsActivity extends PreferenceActivity {
 	 * shown.
 	 */
 	
+	@SuppressWarnings("deprecation")
 	private void setupSimplePreferencesScreen() {
 		if (!isSimplePreferences(this)) {
 			return;
@@ -118,6 +125,11 @@ public class SettingsActivity extends PreferenceActivity {
 		fakeHeader.setTitle(R.string.pref_header_data_sync);
 		getPreferenceScreen().addPreference(fakeHeader);
 		addPreferencesFromResource(R.xml.pref_data_sync);
+
+		deleteAllrulesPreference = findPreference("pref_delete_all_rules");
+		deleteAllrulesPreference.setOnPreferenceClickListener(this);
+
+			
 
 		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
 		// their values. When their values change, their summaries are updated
@@ -295,5 +307,32 @@ public class SettingsActivity extends PreferenceActivity {
 			// guidelines.
 			bindPreferenceSummaryToValue(findPreference("sync_frequency"));
 		}
+	}
+
+	@Override
+	public boolean onPreferenceClick(Preference preference) {
+		if(preference == deleteAllrulesPreference){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			  builder.setMessage("You'll lose all rules!")
+			  .setTitle("Delete all rules?")
+              .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int id) {
+                      
+                	  	Context context = SettingsActivity.this;
+            			SQLHandler sql = new SQLHandler(context);
+            			sql.deleteAllRules();
+            			sql.close();
+                  }
+              })
+              .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                  public void onClick(DialogInterface dialog, int id) {
+                	  	//Nothing
+                  }
+              });
+
+			  AlertDialog alert = builder.create();
+			  alert.show();
+		}
+		return false;
 	}
 }

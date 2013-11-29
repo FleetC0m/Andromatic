@@ -29,8 +29,11 @@
     </Preference>
     
  
-        <Preference android:title="@string/pref_delete_all_rules" >
-        <intent android:action="android.settings.SYNC_SETTINGS" />
+        <Preference 
+            android:title="@string/pref_delete_all_rules"
+            
+            android:key="pref_delete_all_rules" >
+        
     </Preference>
     <!--
          This preference simply launches an intent when selected. Use this UI sparingly, per
