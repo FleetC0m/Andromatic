@@ -1,6 +1,7 @@
 package io.github.fleetc0m.andromatic;
 
 import io.github.fleetc0m.andromatic.UI.CreateNewRuleFragment;
+import io.github.fleetc0m.andromatic.UI.ShowAllRulesFragment;
 
 import java.util.Locale;
 
@@ -77,7 +78,7 @@ public class RootActivity extends FragmentActivity {
 			case 1:
 				return new CreateNewRuleFragment();
 			case 2:
-				return new Fragment();
+				return new ShowAllRulesFragment();
 			default:
 					throw new IllegalArgumentException("invalid position");
 			}
