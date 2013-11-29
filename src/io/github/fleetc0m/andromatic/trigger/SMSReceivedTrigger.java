@@ -78,7 +78,8 @@ public class SMSReceivedTrigger extends Trigger {
 	public String getConfigString() {
 		// TODO Auto-generated method stub
 		//phone_num keyword
-		return phoneNumEdit.getText().toString()+" "+keywordEdit.getText().toString();
+		savedRule = phoneNumEdit.getText().toString()+" "+keywordEdit.getText().toString();
+		return savedRule;
 	}
 
 	@Override

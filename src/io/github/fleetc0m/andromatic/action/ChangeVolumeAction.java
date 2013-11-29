@@ -55,7 +55,8 @@ public class ChangeVolumeAction extends Action {
 	@Override
 	public String getConfigString() {
 		//seekbar.position
-		return ""+seekbar.getProgress();
+		savedRule = ""+seekbar.getProgress();
+		return savedRule;
 	}
 
 	@Override

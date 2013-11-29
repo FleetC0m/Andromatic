@@ -45,7 +45,8 @@ public class SetVibrateAction extends Action{
 	@Override
 	public String getConfigString() {
 		// whether is checked
-		return Boolean.toString(vibrateSwitch.isChecked());
+		savedRule = Boolean.toString(vibrateSwitch.isChecked());
+		return savedRule;
 	}
 
 	@Override

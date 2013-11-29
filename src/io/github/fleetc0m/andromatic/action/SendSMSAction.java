@@ -129,7 +129,8 @@ public class SendSMSAction extends Action{
 	@Override
 	public String getConfigString(){
 		// phone_num msg
-		return phoneNumEdit.getText().toString()+" "+msgEdit.getText().toString();
+		savedRule= phoneNumEdit.getText().toString()+" "+msgEdit.getText().toString();
+		return savedRule;
 	}
 
 	@Override

@@ -14,7 +14,6 @@ import android.widget.EditText;
 public class DrivingModeTrigger extends Trigger{
 
 	private EditText speedEdit;
-	private String speed;
 	private float curr_speed;
 	LocationManager locationManager; 
 	LocationListener locationListener = new LocationListener(){
@@ -63,7 +62,6 @@ public class DrivingModeTrigger extends Trigger{
 		String speed = savedRule;
 		if(speed != null){
 			speedEdit.setText(speed);
-			this.speed = speed;
 		}
 		return view;
 	}
@@ -81,7 +79,8 @@ public class DrivingModeTrigger extends Trigger{
 
 	@Override
 	public String getConfigString() {
-		return speed;
+		savedRule = speedEdit.getText().toString();
+		return savedRule;
 	}
 
 	@Override
