@@ -13,8 +13,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -54,6 +56,7 @@ public class ShowAllRulesFragment extends Fragment {
 		context = this.getActivity();
 		mSQLHandler = new SQLHandler(context);
 		adapter = new AllRuleListAdapter(this.getActivity(), android.R.id.list, allEntries);
+		adapter.setArgs(viewPager, createNewRuleFragment);
 		View rootView = inflater.inflate(R.layout.show_all_rules_fragment, null);
 		listView = (ListView) rootView.findViewById(R.id.all_rule_list);
 		listView.setAdapter(adapter);
@@ -102,12 +105,18 @@ public class ShowAllRulesFragment extends Fragment {
 		private List<Bundle> object;
 		private Context context;
 		private LayoutInflater inflater;
-		
+		private ViewPager viewPager;
+		private CreateNewRuleFragment createNewRuleFragment;
 		public AllRuleListAdapter(Context context, int resource, List<Bundle> object){
 			super(context, resource, object);
 			this.context = context;
 			this.inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 			this.object = object;
+		}
+		
+		public void setArgs(ViewPager v, CreateNewRuleFragment f){
+			this.viewPager = v;
+			this.createNewRuleFragment = f;
 		}
 		
 		@Override
@@ -122,8 +131,29 @@ public class ShowAllRulesFragment extends Fragment {
 			TextView descriptionView = (TextView)cachedView.findViewById(R.id.single_rule_description);
 			String description = object.get(pos).getString(TRIGGER_DESCRIPTION) + ", "
 					+ object.get(pos).getString(ACTION_DESCRIPTION);
-			descriptionView.setText(description);
+			descriptionView.setText(description);			
+			cachedView.setOnClickListener(new ItemOnClickListener(object.get(pos)));
 			return cachedView;
+		}
+		
+		private class ItemOnClickListener implements OnClickListener{
+			public Bundle b;
+			
+			public ItemOnClickListener(Bundle b){
+				this.b = b;
+			}
+			
+			@Override
+			public void onClick(View v) {
+				if(createNewRuleFragment == null){
+					Log.d(TAG, "createNewRule is null");
+				}
+				if(createNewRuleFragment.getAdapter() == null){
+					Log.d(TAG, "adapter is null");
+				}
+				createNewRuleFragment.getAdapter().setSavedState(b);
+				viewPager.setCurrentItem(1);
+			}
 		}
 	}
 }

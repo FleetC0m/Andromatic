@@ -1,14 +1,14 @@
 package io.github.fleetc0m.andromatic.UI;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import io.github.fleetc0m.andromatic.R;
 import io.github.fleetc0m.andromatic.SQLHandler;
 import io.github.fleetc0m.andromatic.action.Action;
 import io.github.fleetc0m.andromatic.trigger.Trigger;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 public class CreateNewRuleFragment extends Fragment {
@@ -47,6 +46,7 @@ public class CreateNewRuleFragment extends Fragment {
 	
 	private Button clearBtn;
 	private Button saveBtn;
+	private Button deleteBtn;
 	
 	public CreateNewRuleFragment(){
 
@@ -107,19 +107,26 @@ public class CreateNewRuleFragment extends Fragment {
 		this.context = this.getActivity();
 		sqlHandler = new SQLHandler(context);
 		View rootView = inflater.inflate(R.layout.new_rule_fragment, container, false);
+		ruleNameField = (EditText) rootView.findViewById(R.id.rule_name_field);
+
 		clearBtn = (Button)rootView.findViewById(R.id.cancel_button);
 		clearBtn.setOnClickListener(new ClearActionListener());
 		saveBtn = (Button) rootView.findViewById(R.id.save_button);
 		saveBtn.setOnClickListener(new SaveActionListener());
+		deleteBtn = (Button) rootView.findViewById(R.id.delete_button);
+		deleteBtn.setOnClickListener(new DeleteActionListener());
 		configListView = (ListView)rootView.findViewById(R.id.list);
 		adapter = new NewRuleConfigAdapter(this.getActivity(), android.R.id.list,
 				titleForListView);
 		adapter.configure(availTriggers, triggerClassMap, availActions, actionClassMap, saveBtn);
+		adapter.setArgs(ruleNameField);
 		configListView.setAdapter(adapter);
-		ruleNameField = (EditText) rootView.findViewById(R.id.rule_name_field);
 		return rootView;
 	}
 	
+	public NewRuleConfigAdapter getAdapter(){
+		return this.adapter;
+	}
 	
 	public static class NewRuleConfigAdapter extends ArrayAdapter<String>{
 		private Context context;
@@ -143,6 +150,8 @@ public class CreateNewRuleFragment extends Fragment {
 		private boolean readyStat;
 		private Button saveBtn;
 		private long rowId;
+		private EditText ruleNameField;
+		
 		
 		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
@@ -154,6 +163,10 @@ public class CreateNewRuleFragment extends Fragment {
 			readyStat = false;
 			rowId = -1;
 		}
+		public void setArgs(EditText ruleNameField){
+			this.ruleNameField = ruleNameField;
+		}
+		
 		public Spinner getTriggerSpinner(){
 			return triggerSpinner;
 		}
@@ -173,7 +186,6 @@ public class CreateNewRuleFragment extends Fragment {
 		}
 		
 		public void setSavedState(Bundle b){
-			rowId = b.getLong(SQLHandler.RULE_ID);
 			Trigger t = null;
 			Action a = null;
 			try{
@@ -186,15 +198,34 @@ public class CreateNewRuleFragment extends Fragment {
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			trigger.setContext(context);
-			triggerConfigView = trigger.getConfigView(b.getString(SQLHandler.TRIGGER_RULE));
+
+			String triggerCommonName = null;
+			for(final String key : triggerMap.keySet()){
+				if(triggerMap.get(key).equals(b.getString(SQLHandler.TRIGGER_CLASS_NAME)))
+					triggerCommonName = key;
+			}
+			String actionCommonName = null;;
+			for(final String key : actionMap.keySet()){
+				if(actionMap.get(key).equals(b.getString(SQLHandler.ACTION_CLASS_NAME)))
+					actionCommonName = key;
+			}
+			triggerSpinner.setSelection(availTriggers.indexOf(triggerCommonName));
+			actionSpinner.setSelection(availActions.indexOf(actionCommonName));
 			
-			action.setContext(context);
-			actionConfigView = action.getConfigView(b.getString(SQLHandler.ACTION_RULE));
+			//rowId must be set after updated spinner selections because
+			//spinner selection change will overwrite rowId
+			rowId = b.getLong(SQLHandler.RULE_ID);
+			t.setContext(context);
+			triggerConfigView = t.getConfigView(b.getString(SQLHandler.TRIGGER_RULE));
+			a.setContext(context);
+			actionConfigView = t.getConfigView(b.getString(SQLHandler.ACTION_RULE));
+			ruleNameField.setText(b.getString(SQLHandler.RULE_NAME));
 			
 			trigger = t;
 			action = a;
 			readyStat = true;
+			saveBtn.setEnabled(true);
+			this.notifyDataSetChanged();
 		}
 		
 		public long getCurrentRowId(){
@@ -356,6 +387,33 @@ public class CreateNewRuleFragment extends Fragment {
 		}
 	}
 	
+	public class DeleteActionListener implements OnClickListener{
+		private long rowId;
+		@Override
+		public void onClick(View v){
+			if(adapter.getCurrentRowId() == -1){
+				return;
+			}
+			rowId = adapter.getCurrentRowId();
+			new DeleteTask().execute(new Integer[]{});
+		}
+		
+		private class DeleteTask extends AsyncTask<Integer, Integer, Integer>{
+			@Override
+			protected Integer doInBackground(Integer... params) {
+				sqlHandler.deleteRuleById(rowId);
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(Integer params){
+				Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+				viewPager.setCurrentItem(2);
+				showAllRulesFragment.notifyDataSetChanged();
+			}
+		}
+	}
+	
 	public class SaveActionListener implements OnClickListener{
 		private String triggerClassName;
 		private String triggerRule;
@@ -387,8 +445,6 @@ public class CreateNewRuleFragment extends Fragment {
 			needPolling = adapter.getTrigger().needPolling();
 			rowId = adapter.getCurrentRowId();
 			new SaveToDBTask().execute(new Bundle[]{});
-
-			//TODO: Write into database.
 		}
 		private class SaveToDBTask extends AsyncTask<Bundle, Integer, Integer>{
 
