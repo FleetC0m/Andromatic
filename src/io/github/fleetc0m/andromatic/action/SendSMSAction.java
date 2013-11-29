@@ -23,6 +23,9 @@ public class SendSMSAction extends Action{
 	private EditText phoneNumEdit;
 	private EditText msgEdit;
 
+	public SendSMSAction(){
+		
+	}
 	
 	@Override
 	public boolean act() {
@@ -131,6 +134,7 @@ public class SendSMSAction extends Action{
 
 	@Override
 	public String getHumanReadableString(){
+		String savedRule = getConfigString();
 		return getHumanReadableString(savedRule);
 	}
 

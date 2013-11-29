@@ -17,6 +17,11 @@ public class ChangeVolumeAction extends Action {
 
 	private SeekBar seekbar;
 
+	public ChangeVolumeAction(){
+		//This constructor must be there even if it doesn't do anything.
+		//Otherwise the classloader will grumble at you. 
+	}
+	
 	@Override
 	public boolean act() {
 		//http://stackoverflow.com/questions/7317974/android-mute-unmute-phone

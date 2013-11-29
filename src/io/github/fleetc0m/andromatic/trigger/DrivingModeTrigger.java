@@ -16,7 +16,7 @@ public class DrivingModeTrigger extends Trigger{
 	private EditText speedEdit;
 	private String speed;
 	private float curr_speed;
-	LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+	LocationManager locationManager; 
 	LocationListener locationListener = new LocationListener(){
 		@Override
 		public void onLocationChanged(Location location) {
@@ -44,8 +44,15 @@ public class DrivingModeTrigger extends Trigger{
 	
 	public DrivingModeTrigger(Context context){
 		super(context);
-		
+		locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
 	}
+
+	@Override
+	public void setContext(Context context){
+		super.setContext(context);
+		locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+	}
+	
 	@Override
 	public View getConfigView(String savedRule) {
 		// TODO Auto-generated method stub

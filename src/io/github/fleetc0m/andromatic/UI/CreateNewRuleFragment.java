@@ -78,14 +78,14 @@ public class CreateNewRuleFragment extends Fragment {
 				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
 		availActions.add("Change ringtone volume");
 		
-		actionClassMap.put("Send sms", 
+		actionClassMap.put("Send SMS", 
 				"io.github.fleetc0m.andromatic.action.SendSMSAction");
-		availActions.add("Send sms");
+		availActions.add("Send SMS");
 		
 		actionClassMap.put("Set vibration", 
 				"io.github.fleetc0m.andromatic.action.SetVibrateAction");
 		availActions.add("Set vibration");
-		
+
 	}
 	
 	@Override
@@ -344,6 +344,7 @@ public class CreateNewRuleFragment extends Fragment {
 		}
 		private class SaveToDBTask extends AsyncTask<Bundle, Integer, Integer>{
 
+			private static final String TAG = "STDBT";
 			@Override
 			protected Integer doInBackground(Bundle... params) {
 				Bundle b = new Bundle();
@@ -360,8 +361,9 @@ public class CreateNewRuleFragment extends Fragment {
 			}
 			@Override
 			protected void onPostExecute(Integer param){
-				String description = triggerDescription + ", " + actionDescription + " recorded.";
+				String description = triggerDescription + ", " + actionDescription + ".";
 				Toast.makeText(context, description, Toast.LENGTH_LONG).show();
+				Log.d(TAG, description);
 			}
 		}
 	}

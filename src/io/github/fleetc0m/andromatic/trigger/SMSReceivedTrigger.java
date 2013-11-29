@@ -89,9 +89,20 @@ public class SMSReceivedTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		// TODO Auto-generated method stub
-		return "When a message from "+rule.split(" ",2)[0]+" with keyword "+rule.split(" ",2)[1]+
-				" is received";
+		String response =  "When a message from ";
+		if(rule.split(" ", 2)[0].equals("")){
+			response += "anyone";
+		}else{
+			response += rule.split(" ", 2)[0];
+		}
+		
+		if(rule.split(" ", 2)[1].equals("")){
+			
+		}else{
+			response += " containing keyword " + rule.split(" ", 2)[1];
+		}
+		response += " is received";
+		return response;
 	}
 
 	@Override
