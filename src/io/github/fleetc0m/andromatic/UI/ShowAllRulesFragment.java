@@ -10,6 +10,7 @@ import io.github.fleetc0m.andromatic.action.Action;
 import io.github.fleetc0m.andromatic.trigger.Trigger;
 import android.app.Activity;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,7 +32,8 @@ public class ShowAllRulesFragment extends Fragment {
 	private static final String ACTION_DESCRIPTION = "actionDescription";
 	private AllRuleListAdapter adapter;
 	private ListView listView;
-
+	private ViewPager viewPager;
+	private CreateNewRuleFragment createNewRuleFragment;
 	
 	public ShowAllRulesFragment(){
 		//allEntries = new List<Bundle>();
@@ -40,7 +42,10 @@ public class ShowAllRulesFragment extends Fragment {
 		allEntries = new ArrayList<Bundle>();
 	}
 	
-	
+	public void setArgs(ViewPager viewPager, CreateNewRuleFragment fragment){
+		this.viewPager = viewPager;
+		this.createNewRuleFragment = fragment;
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, 
