@@ -94,7 +94,7 @@ public class SMSReceivedTrigger extends Trigger {
 	public String getHumanReadableString(String rule) {
 		String response =  "When a message from ";
 		if(rule.split(" ", 2)[0].equals("")){
-			response += " anyone ";
+			response += "anyone";
 		}else{
 			response += rule.split(" ", 2)[0];
 		}
