@@ -1,6 +1,8 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-
+    <PreferenceCategory 
+        android:title="@string/pref_header_account_settings"
+        android:key="pref_user_account_settings">
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
@@ -37,5 +39,6 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_add_friends_to_messages" />
 -->
-
+ </PreferenceCategory>
+ 
 </PreferenceScreen>
