@@ -31,4 +31,5 @@
 	<string name="showw_all_rules_title">All your rules are here. Tap to edit. </string>
 	<string name="all_rule_section_title">All Rules</string>
 	<string name="delete_button_text">Delete</string>
+	<string name="low_battery_trigger_prompt">Please choose a battery level:</string>
 </resources>

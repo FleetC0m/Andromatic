@@ -3,8 +3,12 @@ package io.github.fleetc0m.andromatic.trigger;
 import io.github.fleetc0m.andromatic.R;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.BatteryManager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.SeekBar;
 
 public class LowBatteryTrigger extends Trigger {
 
@@ -16,11 +20,19 @@ public class LowBatteryTrigger extends Trigger {
 		super(context);
 	}
 	
+	private SeekBar seekbar;
+	
 	@Override
 	public View getConfigView(String savedRule) {
-		LayoutInflater inflater = (LayoutInflater) 
-				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.low_battery_trigger, null);
+		LayoutInflater i = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		View view = i.inflate(R.layout.low_battery_trigger, null);
+		seekbar = (SeekBar) view.findViewById(R.id.low_battery_trigger_seekbar);
+		seekbar.setMax(10);
+		if(savedRule==null) return view;
+		int pos = Integer.parseInt(savedRule);
+		if(pos != -1){
+			seekbar.setProgress(pos);
+		}
 		return view;
 	}
 
@@ -31,32 +43,40 @@ public class LowBatteryTrigger extends Trigger {
 
 	@Override
 	public boolean trig() {
-		return true;
+		IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+		Intent batteryStatus = context.registerReceiver(null, ifilter);
+		int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL,-1);
+		int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE,-1);
+		int batteryPct = (int) (level/(float)scale*100);
+		int percent = Integer.parseInt(savedRule)*10;
+		return batteryPct<=percent;
 	}
 
 	@Override
 	public String getConfigString() {
-		return null;
+		savedRule = ""+seekbar.getProgress();
+		return savedRule;
 	}
 
 	@Override
 	public String getIntentAction() {
-		return "android.intent.action.BATTERY_LOW";
+		return null;
 	}
 
 	@Override
 	public String getHumanReadableString() {
-		return "When the power is low, the action will be performed.";
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		return "When the power is low, the action will be performed.";
+		int percent = Integer.parseInt(rule)*10;
+		return "When the power is below " + percent +"%, the action will be performed.";
 	}
 
 	@Override
 	public boolean needPolling() {
-		return false;
+		return true;
 	}
 
 }

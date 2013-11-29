@@ -3,5 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
+    
+    <TextView 
+        android:id="@+id/low_battery_trigger_prompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/low_battery_trigger_prompt"/>
 
+    <SeekBar
+        android:id="@+id/low_battery_trigger_seekbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
 </LinearLayout>

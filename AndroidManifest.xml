@@ -41,14 +41,23 @@
        	</receiver>
        	
         <service
-            android:name="io.github.fleetc0m.andromatic.EventMonitor"
-          	>
-            
+            android:name="io.github.fleetc0m.andromatic.EventMonitor">
         </service>
+        
         <activity android:name="io.github.fleetc0m.andromatic.trigger.DummyBrightnessActivity"
             android:taskAffinity="io.github.fleetc0m.andromatic.trigger.Dummy"
             android:excludeFromRecents="true"
-            android:theme="@style/EmptyActivity"></activity>
+            android:theme="@style/EmptyActivity">
+        </activity>
+        
+        <activity
+            android:name="io.github.fleetc0m.andromatic.SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:parentActivityName="io.github.fleetc0m.andromatic.RootActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.fleetc0m.andromatic.RootActivity" />
+        </activity>
     </application>
 
 </manifest>
