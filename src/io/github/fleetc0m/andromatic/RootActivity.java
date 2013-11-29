@@ -30,18 +30,23 @@ public class RootActivity extends FragmentActivity {
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	private SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-	ViewPager mViewPager;
+	private ViewPager mViewPager;
+	
+	private CreateNewRuleFragment createNewRuleFragment;
+	private ShowAllRulesFragment showAllRulesFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_root);
 
+		this.createNewRuleFragment = new CreateNewRuleFragment();
+		this.showAllRulesFragment = new ShowAllRulesFragment();
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -50,7 +55,9 @@ public class RootActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
-
+		
+		createNewRuleFragment.setArgs(mViewPager, showAllRulesFragment);
+		showAllRulesFragment.setArgs(mViewPager, createNewRuleFragment);
 	}
 
 	@Override
@@ -76,9 +83,9 @@ public class RootActivity extends FragmentActivity {
 			case 0:
 				return new Fragment();
 			case 1:
-				return new CreateNewRuleFragment();
+				return createNewRuleFragment;
 			case 2:
-				return new ShowAllRulesFragment();
+				return showAllRulesFragment;
 			default:
 					throw new IllegalArgumentException("invalid position");
 			}

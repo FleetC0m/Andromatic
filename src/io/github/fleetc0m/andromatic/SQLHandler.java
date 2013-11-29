@@ -26,7 +26,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	private int CURRENT_VERSION = 1;
 	
 	public static final String RULE_NAME = "rulename";
-	public static final String TRIGGER_ID = "_id";
+	public static final String RULE_ID = "_id";
 	public static final String TRIGGER_CLASS_NAME = "classname";
 	public static final String TRIGGER_RULE = "triggerrule";
 	public static final String ACTION_CLASS_NAME = "actionname";
@@ -39,7 +39,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	
 	private static final String TABLE_CREATE = "CREATE TABLE " + TABLE_NAME
 		+ " (" 
-		+ TRIGGER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+		+ RULE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
 		+ RULE_NAME + TEXT_TYPE + ","
 		+ TRIGGER_CLASS_NAME + TEXT_TYPE + ","
 		+ TRIGGER_RULE + TEXT_TYPE + ","
@@ -103,7 +103,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	public Bundle getRuleById(long rowid){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, TRIGGER_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, RULE_ID + " = ?", new String[]{String.valueOf(rowid)}, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
@@ -113,7 +113,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		
 		Bundle bundle = new Bundle();
 		
-		bundle.putLong(TRIGGER_ID, cursor.getLong(0));
+		bundle.putLong(RULE_ID, cursor.getLong(0));
 		bundle.putString(RULE_NAME, cursor.getString(1));
 		bundle.putString(TRIGGER_CLASS_NAME, cursor.getString(2));
 		bundle.putString(TRIGGER_RULE, cursor.getString(3));
@@ -141,7 +141,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 	public Bundle getRuleByName(String ruleName){
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { TRIGGER_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, RULE_NAME + "=?", new String[]{ruleName}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, RULE_NAME + "=?", new String[]{ruleName}, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
@@ -149,7 +149,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 		
 		Bundle bundle = new Bundle();
 		
-		bundle.putLong(TRIGGER_ID, cursor.getLong(0));
+		bundle.putLong(RULE_ID, cursor.getLong(0));
 		bundle.putString(RULE_NAME, cursor.getString(1));
 		bundle.putString(TRIGGER_CLASS_NAME, cursor.getString(2));
 		bundle.putString(TRIGGER_RULE, cursor.getString(3));
@@ -183,7 +183,7 @@ public class SQLHandler extends SQLiteOpenHelper{
             do {
             	Bundle bundle = new Bundle();
             	
-        		bundle.putLong(TRIGGER_ID, cursor.getLong(0));
+        		bundle.putLong(RULE_ID, cursor.getLong(0));
         		bundle.putString(RULE_NAME, cursor.getString(1));
         		bundle.putString(TRIGGER_CLASS_NAME, cursor.getString(2));
         		bundle.putString(TRIGGER_RULE, cursor.getString(3));
@@ -247,7 +247,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 			}
 		}
 		
-		long rowid = db.update(TABLE_NAME, values, TRIGGER_ID + " = ?",new String[] { String.valueOf(bundle.getLong(TRIGGER_ID)) });
+		long rowid = db.update(TABLE_NAME, values, RULE_ID + " = ?",new String[] { String.valueOf(bundle.getLong(RULE_ID)) });
 		Log.d(LOG_TAG, "Updated a trigger in the database: " + bundle.getString(RULE_NAME));
 
         return rowid;
@@ -274,7 +274,7 @@ public class SQLHandler extends SQLiteOpenHelper{
      */
     public void deleteRuleById(long rowid){
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, TRIGGER_ID + " = ?", new String[] {String.valueOf(rowid)});
+        db.delete(TABLE_NAME, RULE_ID + " = ?", new String[] {String.valueOf(rowid)});
 
     }
     /**
@@ -303,7 +303,7 @@ public class SQLHandler extends SQLiteOpenHelper{
     	Log.d(LOG_TAG,"Test Database: " + returnBundle.getString(RULE_TIMESTAMP) + "Count: " + triggerCount);
     	Bundle bundle2 = new Bundle();
     	bundle2.putString(RULE_NAME, "NEW_RULE_NAME");
-    	bundle2.putLong(TRIGGER_ID, 5);
+    	bundle2.putLong(RULE_ID, 5);
     	this.updateRuleById(bundle2);
     	List<Bundle> arrayList = this.getAllRules();
     	
