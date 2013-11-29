@@ -85,6 +85,10 @@ public class CreateNewRuleFragment extends Fragment {
 		actionClassMap.put("Set vibration", 
 				"io.github.fleetc0m.andromatic.action.SetVibrateAction");
 		availActions.add("Set vibration");
+		
+		actionClassMap.put("Change Brightness", 
+				"io.github.fleetc0m.andromatic.action.ChangeBrightnessAction");
+		availActions.add("Change Brightness");
 
 	}
 	

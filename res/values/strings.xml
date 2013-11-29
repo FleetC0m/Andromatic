@@ -28,7 +28,7 @@
     <string name="set_vibrate_action_choice">vibration</string>
 	<string name="rule_name_prompt">Rule name:</string>
 	<string name="optional">(Optional)</string>
-	<string name="set_brightness_action_prompt">Change the brightness to:</string>
+	<string name="change_brightness_action_prompt">Change the brightness to:</string>
 	<string name="showw_all_rules_title">All your rules are here. Tap to edit. </string>
 	<string name="all_rule_section_title">All Rules</string>
 </resources>

@@ -7,12 +7,19 @@ import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
 
 public class SetVibrateAction extends Action{
 	private Switch vibrateSwitch;
 
+	public SetVibrateAction(Context context, String savedRule) {
+		super(context, savedRule);
+	}
+	public SetVibrateAction(){
+		
+	}
 	@Override
 	//http://stackoverflow.com/questions/7317974/android-mute-unmute-phone
 	public boolean act() {
