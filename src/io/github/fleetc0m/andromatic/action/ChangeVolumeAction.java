@@ -49,7 +49,7 @@ public class ChangeVolumeAction extends Action {
 
 	@Override
 	public String getConfigString() {
-		//
+		//seekbar.position
 		return ""+seekbar.getProgress();
 	}
 
@@ -60,11 +60,9 @@ public class ChangeVolumeAction extends Action {
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		int curr_progress = Integer.parseInt(rule);
-		int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
-		int volume = (int) seekbar.getProgress()/10*maxVolume;
-		return "the volume will be set to be "+volume;
+		int percent = (int) curr_progress*10;
+		return "the volume will be set to be "+percent+"%";
 	}
 
 }

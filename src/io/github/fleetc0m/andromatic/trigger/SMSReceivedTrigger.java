@@ -12,9 +12,6 @@ import android.view.View;
 import android.widget.EditText;
 
 public class SMSReceivedTrigger extends Trigger {
-	public static final String PHONE_NUM_FIELD = "phone number";
-	public static final String KEYWORD_FIELD = "keyword";
-	
 	private EditText phoneNumEdit;
 	private EditText keywordEdit;
 	
@@ -87,7 +84,7 @@ public class SMSReceivedTrigger extends Trigger {
 	@Override
 	public String getHumanReadableString() {
 		// TODO Auto-generated method stub
-		return getHumanReadableString(getConfigString());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override

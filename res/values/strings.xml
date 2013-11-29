@@ -28,5 +28,6 @@
     <string name="set_vibrate_action_choice">vibration</string>
 	<string name="rule_name_prompt">Rule name:</string>
 	<string name="optional">(Optional)</string>
+	<string name="set_brightness_action_prompt">Change the brightness to:</string>
 
 </resources>

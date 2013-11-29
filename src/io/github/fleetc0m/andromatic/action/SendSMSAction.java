@@ -20,8 +20,6 @@ public class SendSMSAction extends Action{
 		super(context, savedRule);
 	}
 
-	private static final String PHONE_NUM_FIELD = "phone number";
-	private static final String MSG_FIELD = "message";
 	private EditText phoneNumEdit;
 	private EditText msgEdit;
 

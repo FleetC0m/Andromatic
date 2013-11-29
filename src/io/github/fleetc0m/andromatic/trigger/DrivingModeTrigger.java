@@ -74,8 +74,6 @@ public class DrivingModeTrigger extends Trigger{
 
 	@Override
 	public String getConfigString() {
-		// TODO Auto-generated method stub
-		//speed
 		return speed;
 	}
 
@@ -86,8 +84,7 @@ public class DrivingModeTrigger extends Trigger{
 
 	@Override
 	public String getHumanReadableString() {
-		// TODO Auto-generated method stub
-		return getHumanReadableString(speed);
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override

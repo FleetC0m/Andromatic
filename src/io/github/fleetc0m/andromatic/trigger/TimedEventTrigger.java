@@ -94,8 +94,7 @@ public class TimedEventTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString() {
-		return getHumanReadableString(startTimeEdit.getCurrentHour()+":"+startTimeEdit.getCurrentMinute()+
-				" "+endTimeEdit.getCurrentHour()+":"+endTimeEdit.getCurrentMinute());
+		return getHumanReadableString(savedRule);
 	}
 
 	@Override
