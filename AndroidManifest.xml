@@ -46,7 +46,7 @@
             
         </service>
         <activity android:name="io.github.fleetc0m.andromatic.trigger.DummyBrightnessActivity"
-            android:taskAffinity="com.antonc.phone_schedule.Dummy"
+            android:taskAffinity="io.github.fleetc0m.andromatic.trigger.Dummy"
             android:excludeFromRecents="true"
             android:theme="@style/EmptyActivity"></activity>
     </application>
