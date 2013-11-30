@@ -64,9 +64,9 @@ public class SetVibrateAction extends Action{
 	@Override
 	public String getHumanReadableString(String rule) {
 		if(Boolean.parseBoolean(rule)){
-			return "You set the vibrate mode, it will mute the volume and vibrate";
+			return "vibrate mode will be set and it will mute the volume and vibrate";
 		}else{
-			return "You unset the vibrate mode, it will mute the volume and not vibrate";
+			return "vibrate mode will be unset and it will mute the volume and not vibrate";
 		}
 	}
 

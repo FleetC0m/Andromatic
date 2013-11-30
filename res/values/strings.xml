@@ -32,4 +32,6 @@
 	<string name="all_rule_section_title">All Rules</string>
 	<string name="delete_button_text">Delete</string>
 	<string name="low_battery_trigger_prompt">Please choose a battery level:</string>
+	<string name="ver">Version 1.0</string>
+	<string name="name">Andromatic</string>
 </resources>

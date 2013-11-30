@@ -2,6 +2,7 @@ package io.github.fleetc0m.andromatic;
 
 import io.github.fleetc0m.andromatic.UI.CreateNewRuleFragment;
 import io.github.fleetc0m.andromatic.UI.ShowAllRulesFragment;
+import io.github.fleetc0m.andromatic.UI.WelcomeFragment;
 
 import java.util.Locale;
 
@@ -11,15 +12,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class RootActivity extends FragmentActivity {
 
@@ -40,6 +35,7 @@ public class RootActivity extends FragmentActivity {
 	
 	private CreateNewRuleFragment createNewRuleFragment;
 	private ShowAllRulesFragment showAllRulesFragment;
+	private WelcomeFragment welcomeFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +44,7 @@ public class RootActivity extends FragmentActivity {
 
 		this.createNewRuleFragment = new CreateNewRuleFragment();
 		this.showAllRulesFragment = new ShowAllRulesFragment();
+		this.welcomeFragment = new WelcomeFragment();
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(
@@ -97,7 +94,7 @@ public class RootActivity extends FragmentActivity {
 		public Fragment getItem(int position) {
 			switch(position){
 			case 0:
-				return new Fragment();
+				return welcomeFragment;
 			case 1:
 				return createNewRuleFragment;
 			case 2:

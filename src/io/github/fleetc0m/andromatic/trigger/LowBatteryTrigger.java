@@ -71,7 +71,7 @@ public class LowBatteryTrigger extends Trigger {
 	@Override
 	public String getHumanReadableString(String rule) {
 		int percent = Integer.parseInt(rule)*10;
-		return "When the power is below " + percent +"%, the action will be performed.";
+		return "When the power is below " + percent +"%";
 	}
 
 	@Override

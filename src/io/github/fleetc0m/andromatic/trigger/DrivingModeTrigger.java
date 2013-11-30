@@ -59,6 +59,7 @@ public class DrivingModeTrigger extends Trigger{
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.driving_mode_trigger, null);
 		speedEdit = (EditText) view.findViewById(R.id.driving_mode_trigger_prompt_speed_edit);
+		speedEdit.setText(40);
 		String speed = savedRule;
 		if(speed != null){
 			speedEdit.setText(speed);
@@ -96,7 +97,7 @@ public class DrivingModeTrigger extends Trigger{
 	@Override
 	public String getHumanReadableString(String rule) {
 		// TODO Auto-generated method stub
-		return "You set "+rule+" as the speed. When your speed exceeds "+rule+", the action will be performed";
+		return "When your speed exceeds "+rule;
 	}
 
 	@Override

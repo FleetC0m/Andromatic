@@ -100,7 +100,7 @@ public class TimedEventTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		return "The time you set is from"+rule.split(" ")[0]+" to "+rule.split(" ")[1];
+		return "When the time is from"+rule.split(" ")[0]+" to "+rule.split(" ")[1];
 	}
 
 	@Override
