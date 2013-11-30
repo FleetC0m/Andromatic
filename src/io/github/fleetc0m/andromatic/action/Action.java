@@ -23,10 +23,13 @@ public abstract class Action {
 	protected String savedRule;
 	
 	public Action(){
-		this(null,null);
+		this.setArgs(null,null);
+	}
+	public Action(Context context, String savedRule){
+		this.setArgs(context, savedRule);
 	}
 	
-	public Action(Context context, String savedRule){
+	public void setArgs(Context context, String savedRule){
 		this.context = context;
 		this.savedRule = savedRule;
 	}

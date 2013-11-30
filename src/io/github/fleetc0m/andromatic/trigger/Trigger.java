@@ -26,9 +26,9 @@ public abstract class Trigger {
 	private static final String CLASS_NAME = "io.github.fleetc0m.andromatic.trigger";
 
 	public Trigger(){
-		this(null, null);
 	}
-	public Trigger(Intent incomingIntent, String savedRule){
+	
+	public void setArgs(Intent incomingIntent, String savedRule){
 		this.incomingIntent = incomingIntent;
 		this.savedRule = savedRule;
 	}
