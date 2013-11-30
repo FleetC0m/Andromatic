@@ -25,7 +25,7 @@ public class SetVibrateAction extends Action{
 	public boolean act() {
 		AudioManager audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
 		
-		if(vibrateSwitch.isChecked()){
+		if(Boolean.parseBoolean(savedRule)){
 			audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
 		}else{
 			audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
