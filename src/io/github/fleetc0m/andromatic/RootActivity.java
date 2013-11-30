@@ -58,7 +58,6 @@ public class RootActivity extends FragmentActivity {
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		
 		createNewRuleFragment.setArgs(mViewPager, showAllRulesFragment);
-		showAllRulesFragment.setArgs(mViewPager, createNewRuleFragment);
 	}
 
 	@Override

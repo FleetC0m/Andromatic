@@ -63,8 +63,8 @@ public class CreateNewRuleFragment extends Fragment {
 	}
 	
 	public void setArgs(ViewPager viewPager, ShowAllRulesFragment showAllRulesFragment){
-		this.viewPager = viewPager;
-		this.showAllRulesFragment = showAllRulesFragment;
+			this.viewPager = viewPager;
+			this.showAllRulesFragment = showAllRulesFragment;
 	}
 	
 	private void init(){
@@ -109,6 +109,8 @@ public class CreateNewRuleFragment extends Fragment {
 			Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 		this.context = this.getActivity();
+		//this.viewPager = (ViewPager) this.getActivity().findViewById(R.id.pager);
+		//this.showAllRulesFragment = (ShowAllRulesFragment) this.viewPager.getAdapter().instantiateItem(this.viewPager, 2);
 		sqlHandler = new SQLHandler(context);
 		View rootView = inflater.inflate(R.layout.new_rule_fragment, container, false);
 		ruleNameField = (EditText) rootView.findViewById(R.id.rule_name_field);
@@ -410,7 +412,9 @@ public class CreateNewRuleFragment extends Fragment {
 		@Override
 		public void onClick(View arg0) {
 			if(adapter.getCurrentRowId() != -1){
-				viewPager.setCurrentItem(2);
+				CreateNewRuleFragment.this.viewPager = (ViewPager)
+						CreateNewRuleFragment.this.getActivity().findViewById(R.id.pager);
+				CreateNewRuleFragment.this.viewPager.setCurrentItem(2);
 			}
 			adapter.setCurrentRowId(-1);
 			adapter.triggerSetByNerd = false;
@@ -442,7 +446,13 @@ public class CreateNewRuleFragment extends Fragment {
 			@Override
 			protected void onPostExecute(Integer params){
 				Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
-				viewPager.setCurrentItem(2);
+				CreateNewRuleFragment.this.viewPager = (ViewPager)
+						CreateNewRuleFragment.this.getActivity().findViewById(R.id.pager);
+				CreateNewRuleFragment.this.viewPager.setCurrentItem(2);
+				CreateNewRuleFragment.this.showAllRulesFragment = (ShowAllRulesFragment)
+						CreateNewRuleFragment.this.viewPager.getAdapter().instantiateItem(
+								CreateNewRuleFragment.this.viewPager, 2);
+				CreateNewRuleFragment.this.showAllRulesFragment.notifyDataSetChanged();
 				showAllRulesFragment.notifyDataSetChanged();
 			}
 		}
@@ -507,8 +517,13 @@ public class CreateNewRuleFragment extends Fragment {
 				String description = triggerDescription + ", " + actionDescription + ".";
 				Toast.makeText(context, description, Toast.LENGTH_LONG).show();
 				Log.d(TAG, description);
-				viewPager.setCurrentItem(2);
-				showAllRulesFragment.notifyDataSetChanged();
+				CreateNewRuleFragment.this.viewPager = (ViewPager)
+						CreateNewRuleFragment.this.getActivity().findViewById(R.id.pager);
+				CreateNewRuleFragment.this.viewPager.setCurrentItem(2);
+				CreateNewRuleFragment.this.showAllRulesFragment = (ShowAllRulesFragment)
+						CreateNewRuleFragment.this.viewPager.getAdapter().instantiateItem(
+								CreateNewRuleFragment.this.viewPager, 2);
+				CreateNewRuleFragment.this.showAllRulesFragment.notifyDataSetChanged();
 				clearBtn.performClick();
 			}
 		}

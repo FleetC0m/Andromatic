@@ -44,16 +44,13 @@ public class ShowAllRulesFragment extends Fragment {
 		allEntries = new ArrayList<Bundle>();
 	}
 	
-	public void setArgs(ViewPager viewPager, CreateNewRuleFragment fragment){
-		this.viewPager = viewPager;
-		this.createNewRuleFragment = fragment;
-	}
-	
 	@Override
 	public View onCreateView(LayoutInflater inflater, final ViewGroup container, 
 			Bundle savedInstanceState){
 		super.onCreateView(inflater, container, savedInstanceState);
 		context = this.getActivity();
+		this.viewPager = (ViewPager)this.getActivity().findViewById(R.id.pager);
+		this.createNewRuleFragment = (CreateNewRuleFragment) this.viewPager.getAdapter().instantiateItem(this.viewPager, 1);
 		mSQLHandler = new SQLHandler(context);
 		adapter = new AllRuleListAdapter(this.getActivity(), android.R.id.list, allEntries);
 		adapter.setArgs(viewPager, createNewRuleFragment);
