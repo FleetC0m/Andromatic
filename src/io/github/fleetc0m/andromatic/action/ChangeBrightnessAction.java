@@ -36,7 +36,7 @@ public class ChangeBrightnessAction extends Action{
 		Intent intent = new Intent(context,DummyBrightnessActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("brightness value", brightness);
-		context.getApplicationContext().startActivity(intent);
+		context.startActivity(intent);
 		return false;
 	}
 

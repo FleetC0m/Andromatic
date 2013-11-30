@@ -46,8 +46,8 @@
             android:name="io.github.fleetc0m.andromatic.EventMonitor">
         </service>
         
-        <activity android:name="io.github.fleetc0m.andromatic.trigger.DummyBrightnessActivity"
-            android:taskAffinity="io.github.fleetc0m.andromatic.trigger.Dummy"
+        <activity android:name="io.github.fleetc0m.andromatic.action.DummyBrightnessActivity"
+            android:taskAffinity="io.github.fleetc0m.andromatic.action.Dummy"
             android:excludeFromRecents="true"
             android:theme="@style/EmptyActivity">
         </activity>
