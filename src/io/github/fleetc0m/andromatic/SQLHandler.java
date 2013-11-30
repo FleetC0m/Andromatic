@@ -215,7 +215,7 @@ public class SQLHandler extends SQLiteOpenHelper{
 			pollingQueryName = 0;
 		}
 		
-		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, INTENT_TYPE + "=?", new String[]{String.valueOf((pollingQueryName))}, null, null, null);
+		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, POLLING_TYPE + "=?", new String[]{String.valueOf((pollingQueryName))}, null, null, null);
 		
         
         if (cursor.moveToFirst()) {
