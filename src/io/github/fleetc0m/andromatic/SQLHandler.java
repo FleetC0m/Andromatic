@@ -168,6 +168,83 @@ public class SQLHandler extends SQLiteOpenHelper{
 		return bundle;
 	}
 	
+	public List<Bundle> getRulesByIntent(String intentName){
+		SQLiteDatabase db = this.getReadableDatabase();
+		List<Bundle> triggerList = new ArrayList<Bundle>();
+		
+		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, INTENT_TYPE + "=?", new String[]{intentName}, null, null, null);
+		
+        
+        if (cursor.moveToFirst()) {
+            do {
+            	Bundle bundle = new Bundle();
+            	
+        		bundle.putLong(RULE_ID, cursor.getLong(0));
+        		bundle.putString(RULE_NAME, cursor.getString(1));
+        		bundle.putString(TRIGGER_CLASS_NAME, cursor.getString(2));
+        		bundle.putString(TRIGGER_RULE, cursor.getString(3));
+        		bundle.putString(ACTION_CLASS_NAME, cursor.getString(4));
+        		bundle.putString(ACTION_RULE, cursor.getString(5));
+        		bundle.putString(INTENT_TYPE, cursor.getString(6));
+        		
+        		if(cursor.getInt(7) == 1){
+        			bundle.putBoolean(POLLING_TYPE, true);
+        		}else{
+        			bundle.putBoolean(POLLING_TYPE, false);
+        		}
+        		
+        		bundle.putString(RULE_TIMESTAMP, cursor.getString(8));
+        		
+        		triggerList.add(bundle);
+            } while (cursor.moveToNext());
+        }
+
+        return triggerList;
+	}	
+	
+	
+	public List<Bundle> getRulesByPollingType(boolean pollingType){
+		SQLiteDatabase db = this.getReadableDatabase();
+		List<Bundle> triggerList = new ArrayList<Bundle>();
+		
+		int pollingQueryName;
+		
+		if(pollingType == true){
+			pollingQueryName = 1;
+		}else{
+			pollingQueryName = 0;
+		}
+		
+		Cursor cursor = db.query(TABLE_NAME, new String[] { RULE_ID, RULE_NAME, TRIGGER_CLASS_NAME, TRIGGER_RULE, ACTION_CLASS_NAME, ACTION_RULE, INTENT_TYPE, POLLING_TYPE, RULE_TIMESTAMP}, INTENT_TYPE + "=?", new String[]{String.valueOf((pollingQueryName))}, null, null, null);
+		
+        
+        if (cursor.moveToFirst()) {
+            do {
+            	Bundle bundle = new Bundle();
+            	
+        		bundle.putLong(RULE_ID, cursor.getLong(0));
+        		bundle.putString(RULE_NAME, cursor.getString(1));
+        		bundle.putString(TRIGGER_CLASS_NAME, cursor.getString(2));
+        		bundle.putString(TRIGGER_RULE, cursor.getString(3));
+        		bundle.putString(ACTION_CLASS_NAME, cursor.getString(4));
+        		bundle.putString(ACTION_RULE, cursor.getString(5));
+        		bundle.putString(INTENT_TYPE, cursor.getString(6));
+        		
+        		if(cursor.getInt(7) == 1){
+        			bundle.putBoolean(POLLING_TYPE, true);
+        		}else{
+        			bundle.putBoolean(POLLING_TYPE, false);
+        		}
+        		
+        		bundle.putString(RULE_TIMESTAMP, cursor.getString(8));
+        		
+        		triggerList.add(bundle);
+            } while (cursor.moveToNext());
+        }
+
+        return triggerList;
+	}	
+	
 	/**
 	 * Get a list of Bundle triggers
 	 * @return Bundle List
