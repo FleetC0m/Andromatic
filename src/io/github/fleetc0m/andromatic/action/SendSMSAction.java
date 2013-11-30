@@ -29,8 +29,8 @@ public class SendSMSAction extends Action{
 	
 	@Override
 	public boolean act() {
-		String phoneNo = phoneNumEdit.getText().toString();
-		String msg = msgEdit.getText().toString();
+		String phoneNo = savedRule.split(" ")[0];
+		String msg = savedRule.split(" ")[1];
 		if(phoneNo.length()>0&&msg.length()>0){
 			sendSMS(phoneNo,msg);
 			return true;
