@@ -67,9 +67,11 @@ public class IncomingCallTrigger extends Trigger {
 	@Override
 	public String getConfigString() {
 		if(phoneEdit == null){
+			savedRule = null;
 			return null;
 		}
-		return phoneEdit.getText().toString();
+		savedRule=phoneEdit.getText().toString();
+		return savedRule;
 	}
 
 	@Override
