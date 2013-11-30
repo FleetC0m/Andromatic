@@ -128,6 +128,7 @@ public class CreateNewRuleFragment extends Fragment {
 		return rootView;
 	}
 	
+	
 	public NewRuleConfigAdapter getAdapter(){
 		return this.adapter;
 	}
@@ -156,6 +157,8 @@ public class CreateNewRuleFragment extends Fragment {
 		private long rowId;
 		private EditText ruleNameField;
 		
+		public boolean triggerSetByNerd;
+		public boolean actionSetByNerd;
 		
 		private static final String TAG = "NRCA";
 		public NewRuleConfigAdapter(Context context, int resource, ArrayList<String> objects){
@@ -166,6 +169,8 @@ public class CreateNewRuleFragment extends Fragment {
 			actionListener = new ActionSpinnerOnClickListener();
 			readyStat = false;
 			rowId = -1;
+			triggerSetByNerd = false;
+			actionSetByNerd = false;
 		}
 		public void setArgs(EditText ruleNameField){
 			this.ruleNameField = ruleNameField;
@@ -205,16 +210,22 @@ public class CreateNewRuleFragment extends Fragment {
 
 			String triggerCommonName = null;
 			for(final String key : triggerMap.keySet()){
-				if(triggerMap.get(key).equals(b.getString(SQLHandler.TRIGGER_CLASS_NAME)))
+				if(triggerMap.get(key).equals(b.getString(SQLHandler.TRIGGER_CLASS_NAME))){
 					triggerCommonName = key;
+					break;
+				}
 			}
 			String actionCommonName = null;;
 			for(final String key : actionMap.keySet()){
-				if(actionMap.get(key).equals(b.getString(SQLHandler.ACTION_CLASS_NAME)))
+				if(actionMap.get(key).equals(b.getString(SQLHandler.ACTION_CLASS_NAME))){
 					actionCommonName = key;
+					break;
+				}
 			}
-			triggerSpinner.setSelection(availTriggers.indexOf(triggerCommonName));
-			actionSpinner.setSelection(availActions.indexOf(actionCommonName));
+			triggerSetByNerd = true;
+			actionSetByNerd = true;
+			triggerSpinner.setSelection(availTriggers.indexOf(triggerCommonName), false);
+			actionSpinner.setSelection(availActions.indexOf(actionCommonName), false);
 			
 			//rowId must be set after updated spinner selections because
 			//spinner selection change will overwrite rowId
@@ -222,7 +233,7 @@ public class CreateNewRuleFragment extends Fragment {
 			t.setContext(context);
 			triggerConfigView = t.getConfigView(b.getString(SQLHandler.TRIGGER_RULE));
 			a.setContext(context);
-			actionConfigView = t.getConfigView(b.getString(SQLHandler.ACTION_RULE));
+			actionConfigView = a.getConfigView(b.getString(SQLHandler.ACTION_RULE));
 			ruleNameField.setText(b.getString(SQLHandler.RULE_NAME));
 			
 			trigger = t;
@@ -234,6 +245,10 @@ public class CreateNewRuleFragment extends Fragment {
 		
 		public long getCurrentRowId(){
 			return rowId;
+		}
+		
+		public void setCurrentRowId(long id){
+			this.rowId = id;
 		}
 		
 		public void configure(ArrayList<String> availTriggers,
@@ -292,6 +307,10 @@ public class CreateNewRuleFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int pos, long id) {
+				if(triggerSetByNerd){
+					triggerSetByNerd = false;
+					return;
+				}
 				triggerSpinner.setEnabled(false);
 				rowId = -1;
 				Log.d(TAG, "clicked, pos " + pos);
@@ -341,6 +360,10 @@ public class CreateNewRuleFragment extends Fragment {
 			@Override
 			public void onItemSelected(AdapterView<?> parent, View arg1,
 					int pos, long id) {
+				if(actionSetByNerd){
+					actionSetByNerd = false;
+					return;
+				}
 				actionSpinner.setEnabled(false);
 				rowId = -1;
 				if(pos == 0){
@@ -385,7 +408,14 @@ public class CreateNewRuleFragment extends Fragment {
 	
 	public class ClearActionListener implements OnClickListener{
 		@Override
-		public void onClick(View arg0) {	
+		public void onClick(View arg0) {
+			if(adapter.getCurrentRowId() != -1){
+				viewPager.setCurrentItem(2);
+			}
+			adapter.setCurrentRowId(-1);
+			adapter.triggerSetByNerd = false;
+			adapter.actionSetByNerd = false;
+			ruleNameField.setText("");
 			adapter.getTriggerSpinner().setSelection(0, true);
 			adapter.getActionSpinner().setSelection(0, true);
 		}
