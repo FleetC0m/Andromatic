@@ -1,8 +1,14 @@
 package io.github.fleetc0m.andromatic;
 
+import io.github.fleetc0m.andromatic.action.Action;
+import io.github.fleetc0m.andromatic.trigger.Trigger;
+
+import java.util.List;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 /**
@@ -23,7 +29,29 @@ public class TriggerDispatcher extends BroadcastReceiver {
 			Intent serviceLauncher = new Intent(c, EventMonitor.class);
 			c.startService(serviceLauncher);
 		}else {
-			
+			SQLHandler sql = new SQLHandler(c);
+			List<Bundle> rules = sql.getRulesByIntent(i.getAction());
+			for(Bundle b : rules){
+				try{
+					Trigger t = (Trigger) Class.forName(b.getString(SQLHandler.TRIGGER_CLASS_NAME)).newInstance();
+					t.setArgs(i, b.getString(SQLHandler.TRIGGER_RULE));
+					if(t.trig()){
+						Action a = (Action) Class.forName(b.getString(SQLHandler.ACTION_CLASS_NAME)).newInstance();
+						a.setArgs(c, b.getString(SQLHandler.ACTION_RULE));
+						a.act();
+						Log.d(TAG, b.getString(SQLHandler.TRIGGER_CLASS_NAME) + " : "
+								+ b.getString(SQLHandler.ACTION_CLASS_NAME) + " executed");
+					}
+				}catch(ClassNotFoundException ex){
+					ex.printStackTrace();
+				}catch(LinkageError ex){
+					ex.printStackTrace();
+				} catch (InstantiationException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

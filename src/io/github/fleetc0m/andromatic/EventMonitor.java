@@ -1,7 +1,12 @@
 package io.github.fleetc0m.andromatic;
 
+import java.util.List;
+
+import io.github.fleetc0m.andromatic.action.Action;
+import io.github.fleetc0m.andromatic.trigger.Trigger;
 import android.app.Service;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -34,17 +39,26 @@ public class EventMonitor extends Service {
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		throw new RuntimeException("This service does not allow binding");
 	}
 	
-	private static class Poller implements Runnable{
-
+	private class Poller implements Runnable{
+		private List<Bundle> ruleList;
+		private SQLHandler sql;
+		public Poller(){
+			sql = new SQLHandler(EventMonitor.this);
+		}
+		
 		private static final String TAG = "poller";
 		@Override
 		public void run() {
 			while(true){
 				Log.d(TAG, "polling");
+				ruleList.clear();
+				ruleList.addAll(sql.getRulesByPollingType(true));
+				for(final Bundle b : ruleList){
+					new Executor(b).start();
+				}
 				try {
 					Thread.sleep(60 * 1 * 1000);
 				} catch (InterruptedException e) {
@@ -53,6 +67,34 @@ public class EventMonitor extends Service {
 			}
 		}
 		
+	}
+	
+	private class Executor extends Thread{
+		private Bundle b;
+		public Executor(Bundle b){
+			this.b = b;
+		}
+		
+		@Override
+		public void run(){
+			try {
+				Trigger t = (Trigger) Class.forName(b.getString(SQLHandler.TRIGGER_CLASS_NAME)).newInstance();
+				t.setArgs(null, b.getString(SQLHandler.TRIGGER_RULE));
+				if(t.trig()){
+					Action a = (Action)Class.forName(b.getString(SQLHandler.ACTION_CLASS_NAME)).newInstance();
+					a.setArgs(EventMonitor.this, b.getString(SQLHandler.ACTION_RULE));
+					a.act();
+					Log.d(TAG, b.getString(SQLHandler.TRIGGER_CLASS_NAME) + " : " +
+							b.getString(SQLHandler.ACTION_CLASS_NAME) +  "executed");
+				}
+			} catch (InstantiationException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
