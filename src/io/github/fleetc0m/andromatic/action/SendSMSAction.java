@@ -9,13 +9,15 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class SendSMSAction extends Action{
-	
+
+	private static final String TAG = "SSA";
 	public SendSMSAction(Context context, String savedRule) {
 		super(context, savedRule);
 	}
@@ -53,6 +55,7 @@ public class SendSMSAction extends Action{
 
         SmsManager sms = SmsManager.getDefault();
         sms.sendTextMessage(phoneNumber, null, message, null, null);        
+        Log.d(TAG, phoneNumber + ": " + message + " sent.");
     }	
 	
 	@Override

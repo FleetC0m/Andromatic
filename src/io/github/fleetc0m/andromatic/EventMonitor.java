@@ -1,5 +1,6 @@
 package io.github.fleetc0m.andromatic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.github.fleetc0m.andromatic.action.Action;
@@ -46,6 +47,7 @@ public class EventMonitor extends Service {
 		private List<Bundle> ruleList;
 		private SQLHandler sql;
 		public Poller(){
+			ruleList = new ArrayList<Bundle>();
 			sql = new SQLHandler(EventMonitor.this);
 		}
 		

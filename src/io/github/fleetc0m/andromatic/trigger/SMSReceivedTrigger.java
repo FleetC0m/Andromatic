@@ -5,6 +5,7 @@ import io.github.fleetc0m.andromatic.R;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsMessage;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.EditText;
 public class SMSReceivedTrigger extends Trigger {
 	private EditText phoneNumEdit;
 	private EditText keywordEdit;
+	private static final String TAG = "SRT";
+	
 	
 	public SMSReceivedTrigger(){
 		super(null);
@@ -62,8 +65,10 @@ public class SMSReceivedTrigger extends Trigger {
 			for(int i= 0; i < msgs.length; i ++){
 				msgs[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
 				msg_from = msgs[i].getOriginatingAddress();
+				Log.d(TAG, "from " + msg_from + " phone_no " + phone_no);
 				String msgBody = msgs[i].getMessageBody();
-				if(phone_no.equals(msg_from)){
+				
+				if(PhoneNumberUtils.compare(phone_no, msg_from)){
 					if(msgBody.indexOf(msg)!=-1){
 						return true;
 					}

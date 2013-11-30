@@ -6,6 +6,9 @@ import io.github.fleetc0m.andromatic.UI.WelcomeFragment;
 
 import java.util.Locale;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -42,6 +45,7 @@ public class RootActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_root);
 
+		startServiceIfNotRunning();
 		this.createNewRuleFragment = new CreateNewRuleFragment();
 		this.showAllRulesFragment = new ShowAllRulesFragment();
 		this.welcomeFragment = new WelcomeFragment();
@@ -57,6 +61,23 @@ public class RootActivity extends FragmentActivity {
 		createNewRuleFragment.setArgs(mViewPager, showAllRulesFragment);
 	}
 
+	private void startServiceIfNotRunning(){
+	    if(!eventMonitorUp()){
+			Intent serviceLauncher = new Intent(this, EventMonitor.class);
+			this.startService(serviceLauncher);
+	    }
+	}
+	
+	private boolean eventMonitorUp(){
+	    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+	        if (EventMonitor.class.getName().equals(service.service.getClassName())) {
+				return true;
+	        }
+	    }
+	    return false;
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
