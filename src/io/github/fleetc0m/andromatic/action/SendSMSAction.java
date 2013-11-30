@@ -45,63 +45,16 @@ public class SendSMSAction extends Action{
         String SENT = "SMS_SENT";
         String DELIVERED = "SMS_DELIVERED";
  
-        PendingIntent sentPI = PendingIntent.getBroadcast(this.context, 0,
-            new Intent(SENT), 0);
+        //PendingIntent sentPI = PendingIntent.getBroadcast(this.context, 0,
+          //  new Intent(SENT), 0);
  
-        PendingIntent deliveredPI = PendingIntent.getBroadcast(this.context, 0,
-            new Intent(DELIVERED), 0);
- 
-        //---when the SMS has been sent---
-        context.registerReceiver(new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(context, "SMS sent", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                        Toast.makeText(context, "Generic failure", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NO_SERVICE:
-                        Toast.makeText(context, "No service", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_NULL_PDU:
-                        Toast.makeText(context, "Null PDU", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-                        Toast.makeText(context, "Radio off", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        }, new IntentFilter(SENT));
- 
-        //---when the SMS has been delivered---
-        context.registerReceiver(new BroadcastReceiver(){
-            @Override
-            public void onReceive(Context arg0, Intent arg1) {
-                switch (getResultCode())
-                {
-                    case Activity.RESULT_OK:
-                        Toast.makeText(context, "SMS delivered", 
-                                Toast.LENGTH_SHORT).show();
-                        break;
-                    case Activity.RESULT_CANCELED:
-                        Toast.makeText(context, "SMS not delivered", 
-                                Toast.LENGTH_SHORT).show();
-                        break;                        
-                }
-            }
-        }, new IntentFilter(DELIVERED));        
- 
+       // PendingIntent deliveredPI = PendingIntent.getBroadcast(this.context, 0,
+         //   new Intent(DELIVERED), 0);
+
         SmsManager sms = SmsManager.getDefault();
-        sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);        
+        sms.sendTextMessage(phoneNumber, null, message, null, null);        
     }	
+	
 	@Override
 	public View getConfigView(String savedRule) {
 		// TODO Auto-generated method stub
