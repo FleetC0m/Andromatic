@@ -6,35 +6,17 @@
     android:orientation="vertical"
     android:weightSum="1" >
 
-    <ImageButton
+    <Button
         android:id="@+id/helpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView3"
-        android:layout_alignRight="@+id/textView3"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_action_help" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/helpButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
         android:text="How it works"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableTop="@drawable/ic_action_help"
+        />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="14dp"
-        android:text="Start a new rule"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
         android:id="@+id/imageView1"
@@ -45,36 +27,26 @@
         android:layout_marginBottom="52dp"
         android:src="@drawable/welcome_image" />
 
-    <TextView
-        android:id="@+id/TextView01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:text="Sign up or Sign in"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <ImageButton
-        android:id="@+id/newButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/helpButton"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_below="@+id/textView3"
-        android:layout_marginTop="27dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_action_add_person" />
-
-    <ImageButton
+    <Button
         android:id="@+id/editButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/newButton"
-        android:layout_alignRight="@+id/newButton"
-        android:layout_below="@+id/TextView01"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/helpButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="Start a new rule"
+        android:drawableTop="@drawable/ic_action_edit"
+        android:background="?android:attr/selectableItemBackground" />
+
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:background="?android:attr/selectableItemBackground"
-        android:src="@drawable/ic_action_edit" />
+        android:drawableTop="@drawable/ic_action_add_person"
+        android:text="Sign in or Sign up" />
 
 </RelativeLayout>
