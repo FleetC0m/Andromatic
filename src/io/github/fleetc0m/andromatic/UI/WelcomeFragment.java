@@ -1,7 +1,10 @@
 package io.github.fleetc0m.andromatic.UI;
 
 import io.github.fleetc0m.andromatic.R;
+import io.github.fleetc0m.andromatic.SettingsActivity;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -43,8 +46,8 @@ public class WelcomeFragment extends Fragment{
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			Intent settings = new Intent((Activity)v.getContext(), SettingsActivity.class);
+    		startActivity(settings);
 		}
 		
 	}
