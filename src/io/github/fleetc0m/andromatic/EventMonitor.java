@@ -82,9 +82,11 @@ public class EventMonitor extends Service {
 			try {
 				Trigger t = (Trigger) Class.forName(b.getString(SQLHandler.TRIGGER_CLASS_NAME)).newInstance();
 				t.setArgs(null, b.getString(SQLHandler.TRIGGER_RULE));
+				t.setContext(EventMonitor.this);
 				if(t.trig()){
 					Action a = (Action)Class.forName(b.getString(SQLHandler.ACTION_CLASS_NAME)).newInstance();
 					a.setArgs(EventMonitor.this, b.getString(SQLHandler.ACTION_RULE));
+					a.setContext(EventMonitor.this);
 					a.act();
 					Log.d(TAG, b.getString(SQLHandler.TRIGGER_CLASS_NAME) + " : " +
 							b.getString(SQLHandler.ACTION_CLASS_NAME) +  "executed");
