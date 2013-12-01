@@ -1,5 +1,6 @@
 package io.github.fleetc0m.andromatic.UI;
 
+import io.github.fleetc0m.andromatic.HelpActivity;
 import io.github.fleetc0m.andromatic.R;
 import io.github.fleetc0m.andromatic.SettingsActivity;
 import android.app.Activity;
@@ -56,8 +57,8 @@ public class WelcomeFragment extends Fragment{
 
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			
+			Intent settings = new Intent((Activity)v.getContext(), HelpActivity.class);
+    		startActivity(settings);
 		}
 		
 	}
