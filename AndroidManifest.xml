@@ -18,17 +18,22 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/lancher_ico"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Holo.Light" >
         <activity
-            android:name="io.github.fleetc0m.andromatic.RootActivity"
+            android:name="io.github.fleetc0m.andromatic.WelcomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="io.github.fleetc0m.andromatic.RootActivity"
+            android:label="@string/app_name" >
         </activity>
         
         <receiver
