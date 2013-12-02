@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:text="Welcome Andromatic!"
+        android:text="@string/welcome"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView
@@ -45,6 +45,7 @@
         android:layout_above="@+id/textView3"
         android:layout_alignLeft="@+id/textView1"
         android:layout_marginBottom="32dp"
+        android:contentDescription="@string/welcome_image"
         android:src="@drawable/welcome_image" />
 
 </RelativeLayout>

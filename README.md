@@ -5,6 +5,7 @@ An <a href="https://ifttt.com/">IFTTT</a> for you Android Device. You can define
 Currently Support (In progress)
 ------------------
 Triggers:
+
 1.  SMSIncoming, handles events related to incoming messages.(OK)
 
 2.  LowBattery(OK)

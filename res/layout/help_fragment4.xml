@@ -19,7 +19,7 @@
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1.Click on the save button" />
+                android:text="@string/save_information" />
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -31,13 +31,13 @@
                 android:src="@drawable/ic_save1" />
             
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2.Tab the rule you want to edit" />
+                android:text="@string/edit_information" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageView2"
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:layout_marginBottom="52dp"
@@ -45,13 +45,13 @@
                 android:src="@drawable/ic_manage1" />
             
              <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3.Edit your rule" />
+                android:text="@string/edit_rule" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageView3"
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:layout_marginBottom="52dp"
@@ -59,13 +59,13 @@
                 android:src="@drawable/ic_manage2" />
             
             <TextView
-                android:id="@+id/textView1"
+                android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="4.You can also delete the rule if you no longer want it" />
+                android:text="@string/delete_information" />
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/imageView5"
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
                 android:layout_marginBottom="52dp"

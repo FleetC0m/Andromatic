@@ -3,7 +3,7 @@
 
     <string name="app_name">Andromatic</string>
     <string name="action_settings">Settings</string>
-    <string name="welcome_section_title">ANDROMATIC</string>
+    <string name="welcome_section_title">Welcome</string>
     <string name="new_rule_section_title">Define a new rule</string>
 	<string name="create_new_rule_fragment_title">Create new rule</string>
 	<string name="cancel_button_text">Clear</string>
@@ -13,7 +13,7 @@
 	<string name="sms_received_trigger_prompt_phone_no">Incoming SMS from this phone number:</string>
 	<string name="sms_received_trigger_prompt_phone_no_hint">Blank if apply to all numbers</string>
 	<string name="sms_received_trigger_keyword_prompt">Contains keyword:</string>
-	<string name="sms_received_trigger_keyword_hint">Blank if apply to all messages. Mulitple keywords separated by space.</string>
+	<string name="sms_received_trigger_keyword_hint">Blank if apply to all messages.</string>
 	<string name="change_volume_action_prompt">Change the ringtone volume to:</string>
 	<string name="timed_event_trigger_prompt_start_time">From</string>
 	<string name="timed_event_trigger_prompt_end_time">To</string>
@@ -39,4 +39,20 @@
 	<string name="trigger_section_title">CHOOSE A TRIGGER</string>
 	<string name="action_section_title">CHOOSE AN ACTION</string>
 	<string name="manage_section_title">manage your rules</string>
+    <string name="welcome_image">Welcome</string>
+    <string name="create_new_rule">Create a new rule</string>
+    <string name="log_in_or_sign_up">Login in or sign up</string>
+    <string name="help">How it works</string>
+    <string name="back_button_text">Back to main page</string>
+    <string name="intro">Andromatic is an application response to different events automatically according to the user-defined rules. For example, if an SMS received contains a keyword, ring the phone even if it is currently silenced, and a lot more!</string>
+    <string name="choose_a_trigger">1.Choose a trigger from the trigger list</string>
+    <string name="choose_a_action">1.Choose an action from the action list</string>
+    <string name="fill_in_message">2.Please fill in the required information</string>
+    <string name="save_information">1.Click on the save button</string>
+    <string name="edit_information">2.Tab the rule you want to edit</string>
+    <string name="edit_rule">3.Edit your rule</string>
+    <string name="delete_information">4.You can also delete the rule if you no longer want itsms_send_action_prompt_phone_no_hint</string>
+    <string name="sms_send_action_phone_no_hint">Blank if send to nobody</string>
+    <string name="sms_send_action_keyword_hint">Blank if messge is empty</string>
+	
 </resources>

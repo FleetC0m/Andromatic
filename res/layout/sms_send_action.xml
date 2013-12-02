@@ -12,7 +12,8 @@
     <EditText
 		android:id="@+id/sms_send_action_prompt_phone_no"
 		android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:hint="@string/sms_send_action_phone_no_hint"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -22,6 +23,7 @@
 	<EditText
 		android:id="@+id/sms_send_action_prompt_msg"
         android:layout_width="fill_parent"
-		android:layout_height="150px"
+		android:layout_height="150dp"
+		android:hint="@string/sms_send_action_keyword_hint"
         android:gravity="top" />
 </LinearLayout>

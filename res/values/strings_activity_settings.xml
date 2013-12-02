@@ -16,6 +16,9 @@
     <string name="pref_header_account_settings">Account Settings</string>
     <string name="pref_username">Username</string>
     <string name="pref_password_edit">Change Password</string>
+    <string name="pref_about_us_str">About us</string>
+    <string name="pref_other">Others</string>
+    <string name="pref_check_update">Check updates</string>
     
     <string name="pref_title_auto_backup">Auto backup to the cloud</string>
     <string name="pref_description_auto_backup">Your rules will be auto backup to the cloud server</string>
