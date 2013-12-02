@@ -34,5 +34,9 @@
 	<string name="low_battery_trigger_prompt">Please choose a battery level:</string>
 	<string name="ver">Version 1.0</string>
 	<string name="name">Andromatic</string>
-	<string name="welcome">Welcome Andromatic!</string>
+	<string name="welcome">Welcome to Andromatic!</string>
+	<string name="welcome_section_title">Welcome</string>
+	<string name="welcome_image">Welcome</string>
+	<string name="create_new_rule">Create a new rule</string>
+	<string name="login_in_or_sign_up">Login in or sign up</string>
 </resources>
