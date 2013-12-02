@@ -83,8 +83,8 @@ public class CreateNewRuleFragment extends Fragment {
 		triggerClassMap.put("Phone Incoming", "io.github.fleetc0m.andromatic.trigger.IncomingCallTrigger");
 		availTriggers.add("Phone Incoming");
 		
-		//triggerClassMap.put("Low Battery", "io.github.fleetc0m.andromatic.trigger.LowBatteryTrigger");
-		//availTriggers.add("Low Battery");
+		triggerClassMap.put("Low Battery", "io.github.fleetc0m.andromatic.trigger.LowBatteryTrigger");
+		availTriggers.add("Low Battery");
 		
 		actionClassMap.put("Change ringtone volume", 
 				"io.github.fleetc0m.andromatic.action.ChangeVolumeAction");
