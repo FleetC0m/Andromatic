@@ -46,6 +46,8 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 	 */
 	private static final boolean ALWAYS_SIMPLE_PREFS = false;
 	private Preference deleteAllrulesPreference;
+	private Preference updateVersionPref;
+	private Preference aboutUsPref;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -129,7 +131,16 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		deleteAllrulesPreference = findPreference("pref_delete_all_rules");
 		deleteAllrulesPreference.setOnPreferenceClickListener(this);
 
-			
+		//Add other settings
+		addPreferencesFromResource(R.xml.pref_about_us);
+		
+		updateVersionPref = findPreference("pref_check_update");
+		updateVersionPref.setOnPreferenceClickListener(this);
+		
+		
+		aboutUsPref = findPreference("pref_about_us");
+		aboutUsPref.setOnPreferenceClickListener(this);
+		
 
 		// Bind the summaries of EditText/List/Dialog/Ringtone preferences to
 		// their values. When their values change, their summaries are updated
@@ -329,6 +340,19 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
                 	  	//Nothing
                   }
               });
+
+			  AlertDialog alert = builder.create();
+			  alert.show();
+		}
+		
+		if(preference == aboutUsPref){
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			  builder.setMessage("Andromatic Version 1.0\n\nAuthors: Dihong Gao, Wei Kong, Yudong Yang")
+			  .setTitle("About Us")
+			  .setCancelable(false)
+			  .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) { }
+            });
 
 			  AlertDialog alert = builder.create();
 			  alert.show();

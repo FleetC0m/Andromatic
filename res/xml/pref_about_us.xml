@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+        <PreferenceCategory 
+        android:title="@string/pref_other"
+        android:key="pref_others">
+    
+    	<Preference 
+    	    android:title="@string/pref_check_update"
+    	    android:key="pref_check_update"
+    	    />
+    
+        <Preference 
+            android:title="@string/pref_about_us_str"
+            android:key="pref_about_us" 
+            />
+        
+         </PreferenceCategory>
+</PreferenceScreen>
