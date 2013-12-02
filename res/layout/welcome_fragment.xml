@@ -48,6 +48,6 @@
         android:layout_marginTop="30dp"
         android:background="?android:attr/selectableItemBackground"
         android:drawableTop="@drawable/ic_action_add_person"
-        android:text="@string/login_or_sign_up" />
+        android:text="@string/log_in_or_sign_up" />
 
 </RelativeLayout>
