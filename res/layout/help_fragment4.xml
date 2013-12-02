@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/backButton" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="484dp"
+            android:orientation="vertical" >
+
+			            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1.Click on the save button" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+          
+                android:layout_marginBottom="52dp"
+                android:layout_weight="3.25"
+                android:src="@drawable/ic_save1" />
+            
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2.Tab the rule you want to edit" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_marginBottom="52dp"
+                android:layout_weight="3.25"
+                android:src="@drawable/ic_manage1" />
+            
+             <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3.Edit your rule" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_marginBottom="52dp"
+                android:layout_weight="3.25"
+                android:src="@drawable/ic_manage2" />
+            
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.You can also delete the rule if you no longer want it" />
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="match_parent"
+                android:layout_height="360dp"
+                android:layout_marginBottom="52dp"
+                android:layout_weight="3.25"
+                android:src="@drawable/ic_manage3" />
+            
+            
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:drawableTop="@drawable/ic_action_undo"
+        android:text="Back to main page" />
+       
+</RelativeLayout>

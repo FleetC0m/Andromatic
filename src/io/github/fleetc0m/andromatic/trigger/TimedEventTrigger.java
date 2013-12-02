@@ -83,11 +83,18 @@ public class TimedEventTrigger extends Trigger {
 	@Override
 	public String getConfigString() {
 		//the_start_hour:the_start_minite the_end_hour:the_end_minute
-		savedRule = startTimeEdit.getCurrentHour()+":"+startTimeEdit.getCurrentMinute()+
-				" "+endTimeEdit.getCurrentHour()+":"+endTimeEdit.getCurrentMinute();
+		savedRule = padding(startTimeEdit.getCurrentHour())+":"+padding(startTimeEdit.getCurrentMinute())+
+				" "+padding(endTimeEdit.getCurrentHour())+":"+padding(endTimeEdit.getCurrentMinute());
 		return savedRule;
 	}
 
+	public String padding(int i){
+		if(i<10){
+			return "0"+i;
+		}else{
+			return ""+i;
+		}
+	}
 	@Override
 	public String getIntentAction() {
 		return null;

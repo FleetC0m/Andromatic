@@ -68,8 +68,8 @@ public class SMSReceivedTrigger extends Trigger {
 				Log.d(TAG, "from " + msg_from + " phone_no " + phone_no);
 				String msgBody = msgs[i].getMessageBody();
 				
-				if(PhoneNumberUtils.compare(phone_no, msg_from)){
-					if(msgBody.indexOf(msg)!=-1){
+				if(PhoneNumberUtils.compare(phone_no, msg_from)||(phone_no.length()==0)){
+					if((msgBody.indexOf(msg)!=-1)||(msg.length()==0)){
 						return true;
 					}
 				}

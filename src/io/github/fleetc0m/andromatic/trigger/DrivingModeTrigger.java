@@ -59,7 +59,6 @@ public class DrivingModeTrigger extends Trigger{
 				context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.driving_mode_trigger, null);
 		speedEdit = (EditText) view.findViewById(R.id.driving_mode_trigger_prompt_speed_edit);
-		speedEdit.setText(40);
 		String speed = savedRule;
 		if(speed != null){
 			speedEdit.setText(speed);
@@ -80,7 +79,11 @@ public class DrivingModeTrigger extends Trigger{
 
 	@Override
 	public String getConfigString() {
-		savedRule = speedEdit.getText().toString();
+		if(speedEdit.getText().length()==0){
+			savedRule = ""+40;
+		}else{
+			savedRule = speedEdit.getText().toString();
+		}
 		return savedRule;
 	}
 

@@ -69,8 +69,11 @@ public class IncomingCallTrigger extends Trigger {
 		if(phoneEdit == null){
 			savedRule = null;
 			return null;
+		}else if(phoneEdit.getText().length()==0){
+			savedRule = "";
+		}else{
+			savedRule=phoneEdit.getText().toString();
 		}
-		savedRule=phoneEdit.getText().toString();
 		return savedRule;
 	}
 
@@ -87,7 +90,9 @@ public class IncomingCallTrigger extends Trigger {
 
 	@Override
 	public String getHumanReadableString(String rule) {
-		
+		if((rule==null)||(rule.length()==0)){
+			return "When an incoming call is received";
+		}
 		return "When an incoming call phone number: " + rule +  " is received";
 	}
 

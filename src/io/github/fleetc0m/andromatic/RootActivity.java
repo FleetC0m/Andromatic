@@ -140,7 +140,7 @@ public class RootActivity extends FragmentActivity {
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
+				return getString(R.string.welcome_section_title).toUpperCase(l);
 			case 1:
 				return getString(R.string.new_rule_section_title).toUpperCase(l);
 			case 2:
