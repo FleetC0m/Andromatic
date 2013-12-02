@@ -36,6 +36,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/cancel_button_text"
+	        android:drawableTop="@drawable/ic_action_undo"
 	        android:background="?android:attr/selectableItemBackground"
 	        />
 	    <Button 
@@ -44,6 +45,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/delete_button_text"
+	        android:drawableTop="@drawable/ic_action_cancel"
 	        android:background="?android:attr/selectableItemBackground"	        
 	        />
 	    <Button 
@@ -52,6 +54,7 @@
 	        android:layout_height="wrap_content"
 	        android:layout_weight="1"
 	        android:text="@string/save_button_text"
+	        android:drawableTop="@drawable/ic_action_save"
 	        android:background="?android:attr/selectableItemBackground"
 	        />
 	</LinearLayout>

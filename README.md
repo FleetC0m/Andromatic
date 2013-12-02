@@ -7,7 +7,7 @@ Currently Support (In progress)
 Triggers:
 1.  SMSIncoming, handles events related to incoming messages.(OK)
 
-2.  LowBattery(??)
+2.  LowBattery(OK)
 
 3.  DrivingMode, handles events related to driving. For example if my moving speed is greater than 40mph, resume music.(??)
 
@@ -22,7 +22,7 @@ Actions:
 
 2.  Send SMS with customized content.(implemented--OK)
 
-3.  set vibration(implemented )
+3.  set vibration(implemented--OK )
 
 4.  change brightness(implemented--OK)
 
