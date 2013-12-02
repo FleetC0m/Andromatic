@@ -41,7 +41,7 @@
 	<string name="manage_section_title">manage your rules</string>
     <string name="welcome_image">Welcome</string>
     <string name="create_new_rule">Create a new rule</string>
-    <string name="log_in_or_sign_up">Login in or sign up</string>
+    <string name="log_in_or_sign_up">Log in or sign up</string>
     <string name="help">How it works</string>
     <string name="back_button_text">Back to main page</string>
     <string name="intro">Andromatic is an application response to different events automatically according to the user-defined rules. For example, if an SMS received contains a keyword, ring the phone even if it is currently silenced, and a lot more!</string>
@@ -51,7 +51,7 @@
     <string name="save_information">1.Click on the save button</string>
     <string name="edit_information">2.Tab the rule you want to edit</string>
     <string name="edit_rule">3.Edit your rule</string>
-    <string name="delete_information">4.You can also delete the rule if you no longer want itsms_send_action_prompt_phone_no_hint</string>
+    <string name="delete_information">4.You can also delete the rule if you no longer want it</string>
     <string name="sms_send_action_phone_no_hint">Blank if send to nobody</string>
     <string name="sms_send_action_keyword_hint">Blank if messge is empty</string>
 	

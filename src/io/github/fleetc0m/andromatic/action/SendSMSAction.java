@@ -31,14 +31,12 @@ public class SendSMSAction extends Action{
 	
 	@Override
 	public boolean act() {
-		String phoneNo = savedRule.split(" ")[0];
-		String msg = savedRule.split(" ")[1];
+		String phoneNo = savedRule.split(" ",2)[0];
+		String msg = savedRule.split(" ",2)[1];
 		if(phoneNo.length()>0&&msg.length()>0){
 			sendSMS(phoneNo,msg);
-			return true;
-		}else{
-			return false;
 		}
+		return true;
 	}
 
 	private void sendSMS(String phoneNumber, String message)
@@ -100,6 +98,12 @@ public class SendSMSAction extends Action{
 		// TODO Auto-generated method stub
 		String num = rule.split(" ",2)[0];
 		String msg = rule.split(" ",2)[1];
+		if(num.length()==0){
+			return "the phone number is empty, no message will be sent";
+		}
+		if(msg.length()==0){
+			return "the message body is empty, no message will be sent";
+		}
 		return "you will send the following msg to "+num+":\n"+msg;
 	}
 	

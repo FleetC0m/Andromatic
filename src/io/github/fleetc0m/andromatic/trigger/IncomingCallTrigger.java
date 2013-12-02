@@ -56,7 +56,7 @@ public class IncomingCallTrigger extends Trigger {
 			
 			Bundle bundle = incomingIntent.getExtras();
 			String incomingNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-			if(incomingNumber != null && savedRule != null && savedRule.equals(incomingNumber)){
+			if((incomingNumber != null && savedRule != null && savedRule.equals(incomingNumber))||(savedRule=="")){
 				return true;
 			}else{
 				return false;
