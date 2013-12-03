@@ -372,10 +372,10 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 		}
 		
 		if(preference == updateVersionPref){
-			new AsyncTask<Context, Integer, Boolean>(){
+			new AsyncTask<Context, Integer, Integer>(){
 				private Context c;
 				@Override
-				protected Boolean doInBackground(Context... params) {
+				protected Integer doInBackground(Context... params) {
 					this.c = params[0];
 					try {
 						HttpClient client = new DefaultHttpClient();
@@ -395,9 +395,9 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 						String data = sb.toString();
 						int ver = Integer.valueOf(data);
 						if(ver == 1){
-							return false;
+							return 0;
 						}else if(ver > 1){
-							return true;
+							return 1;
 						}
 					} catch (URISyntaxException e) {
 						e.printStackTrace();
@@ -405,17 +405,21 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 						e.printStackTrace();
 					} catch (IOException e) {
 						e.printStackTrace();
+					} catch(NumberFormatException e){
+						e.printStackTrace();
 					}
 					
-					return null;
+					return -1;
 				}
 				
 				@Override
-				protected void onPostExecute(Boolean i){
-					if(!i){
+				protected void onPostExecute(Integer i){
+					if(i == 0){
 						Toast.makeText(c, "Your app is up to date.", Toast.LENGTH_LONG).show();
-					}else{
+					}else if(i == 1){
 						Toast.makeText(c, "There's an update available", Toast.LENGTH_LONG).show();
+					}else if(i == -1){
+						Toast.makeText(c, "Unable to fetch update infomation. Please try again later.", Toast.LENGTH_LONG).show();
 					}
 				}
 				
