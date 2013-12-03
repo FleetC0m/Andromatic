@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -22,9 +23,21 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -357,6 +370,58 @@ public class SettingsActivity extends PreferenceActivity implements OnPreference
 			  AlertDialog alert = builder.create();
 			  alert.show();
 		}
+		
+		if(preference == updateVersionPref){
+			new AsyncTask<Context, Integer, Boolean>(){
+				private Context c;
+				@Override
+				protected Boolean doInBackground(Context... params) {
+					this.c = params[0];
+					try {
+						HttpClient client = new DefaultHttpClient();
+						URI site = new URI("http://web.ics.purdue.edu/~gao118/restricted/version.txt");
+						HttpGet request = new HttpGet();
+						request.setURI(site);
+						HttpResponse response = client.execute(request);
+						response.getStatusLine().getStatusCode();
+						BufferedReader in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+						StringBuffer sb = new StringBuffer();
+						//String nl = System.getProperty("line.separator");
+						String line = "";
+						while((line = in.readLine()) != null){
+							sb.append(line);
+						} 
+						in.close();
+						String data = sb.toString();
+						int ver = Integer.valueOf(data);
+						if(ver == 1){
+							return false;
+						}else if(ver > 1){
+							return true;
+						}
+					} catch (URISyntaxException e) {
+						e.printStackTrace();
+					} catch (ClientProtocolException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					return null;
+				}
+				
+				@Override
+				protected void onPostExecute(Boolean i){
+					if(!i){
+						Toast.makeText(c, "Your app is up to date.", Toast.LENGTH_LONG).show();
+					}else{
+						Toast.makeText(c, "There's an update available", Toast.LENGTH_LONG).show();
+					}
+				}
+				
+			}.execute(new Context[]{this});
+		}
 		return false;
 	}
 }
+
